@@ -1,0 +1,98 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String?
+  business  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  clients   Client[]
+  projects  Project[]
+}
+
+model Client {
+  id        String   @id @default(cuid())
+  userId    String
+  name      String
+  contact   String?
+  email     String?
+  phone     String?
+  status    String   @default("Active") // Active, Lead, Inactive
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user      User      @relation(fields: [userId], references: [id])
+  projects  Project[]
+}
+
+model Project {
+  id          String   @id @default(cuid())
+  userId      String
+  clientId    String
+  name        String
+  budget      Float    @default(0)
+  quotedHours Int      @default(0)
+  loggedHours Int      @default(0)
+  status      String   @default("Starting") // Starting, On Track, At Risk, Completed
+  progress    Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  user        User      @relation(fields: [userId], references: [id])
+  client      Client    @relation(fields: [clientId], references: [id])
+  requests    Request[]
+  quotes      Quote[]
+}
+
+model Request {
+  id          String   @id @default(cuid())
+  projectId   String?
+  clientName  String?  // For unlinked leads
+  source      String   @default("Email")
+  preview     String
+  type        String   @default("New Lead") // New Lead, Scope Creep
+  status      String   @default("New")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  project     Project? @relation(fields: [projectId], references: [id])
+}
+
+model Quote {
+  id          String   @id @default(cuid())
+  projectId   String?
+  amount      Float
+  status      String   @default("Draft")
+  type        String   @default("Quote") // Quote, Change Order
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  project     Project? @relation(fields: [projectId], references: [id])
+}
+
+model Event {
+  id          String   @id @default(cuid())
+  title       String
+  date        DateTime
+  startTime   String?
+  endTime     String?
+  description String?
+  location    String?
+  guests      String?
+  isZoom      Boolean  @default(false)
+  isGoogleMeet Boolean @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
