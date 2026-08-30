@@ -13,8 +13,8 @@ const signupSchema = z.object({
   fullName: z.string().min(2, "Full name is required."),
   email: z.string().email("Please enter a valid email address."),
   password: z.string().min(8, "Password must be at least 8 characters."),
-  termsAccepted: z.literal(true, {
-    invalid_type_error: "You must accept the Terms of Service and Privacy Policy.",
+  termsAccepted: z.boolean().refine((val) => val === true, {
+    message: "You must accept the Terms of Service and Privacy Policy.",
   }),
 });
 
