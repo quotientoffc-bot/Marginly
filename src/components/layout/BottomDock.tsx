@@ -12,13 +12,16 @@ import {
   CalendarDays,
   Blocks,
   PlaySquare,
-  Terminal
+  Terminal,
+  MessageSquare
 } from "lucide-react";
 import GlassDock from "@/components/ui/glass-dock";
 import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const clientNavigation = [
   { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
+  { name: "Team Feed", href: "/dashboard/feed", icon: MessageSquare },
   { name: "Requests", href: "/dashboard/requests", icon: Inbox },
   { name: "Quotes", href: "/dashboard/quotes", icon: FileText },
   { name: "Projects", href: "/dashboard/projects", icon: Briefcase },
@@ -30,6 +33,7 @@ const clientNavigation = [
 
 const managerNavigation = [
   { name: "Admin Console", href: "/dashboard", icon: ShieldAlert },
+  { name: "Team Feed", href: "/dashboard/feed", icon: MessageSquare },
   { name: "Security Logs", href: "/dashboard/logs", icon: Terminal },
   { name: "System Config", href: "/dashboard/settings", icon: Settings },
 ];
