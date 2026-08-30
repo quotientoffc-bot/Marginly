@@ -96,15 +96,8 @@ export default function SettingsPage() {
       <div className="max-w-4xl mx-auto h-full flex flex-col pt-12 animate-in fade-in slide-in-from-bottom-4 duration-700 pb-32">
         
         <div className="mb-12 px-6">
-          <h1 className="text-4xl font-medium tracking-tight text-white mb-3 flex items-center justify-between">
+          <h1 className="text-4xl font-medium tracking-tight text-white mb-3">
             Account Settings
-            <button 
-              onClick={triggerAdminLogin}
-              className="opacity-0 hover:opacity-20 transition-opacity p-2"
-              title="System override"
-            >
-              <Lock className="w-5 h-5 text-white" />
-            </button>
           </h1>
           <p className="text-white/50 text-lg">Manage your personal profile and workspace preferences.</p>
         </div>
@@ -220,6 +213,23 @@ export default function SettingsPage() {
                 {isSubmitting ? "Sending..." : "Submit Query"}
               </RadialGlowButton>
             </form>
+          </div>
+          
+          {/* System Administration */}
+          <div className="glass-panel squircle-lg p-8 border border-white/10 relative overflow-hidden group">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+            <div className="flex items-center gap-3 mb-2">
+              <Shield className="w-5 h-5 text-purple-400" />
+              <h2 className="text-xl font-medium text-white">System Administration</h2>
+            </div>
+            <p className="text-sm text-white/50 mb-6">Restricted access for platform administrators and founders only.</p>
+            <button 
+              onClick={triggerAdminLogin}
+              className="px-6 py-3 bg-purple-500/10 hover:bg-purple-500/20 text-purple-400 font-medium rounded-xl border border-purple-500/20 transition-colors flex items-center gap-2"
+            >
+              <Lock className="w-4 h-4" />
+              Admin Console Login
+            </button>
           </div>
           
           {/* Danger Zone */}
