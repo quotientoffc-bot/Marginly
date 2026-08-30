@@ -303,6 +303,21 @@ export default function SettingsPage() {
           >
             <Shield className="w-4 h-4" /> Platform Security
           </button>
+
+          <div className="pt-8 mt-4 border-t border-white/10">
+            <button 
+              onClick={async () => {
+                const { createClient } = await import("@/lib/supabase-client");
+                const supabase = createClient();
+                await supabase.auth.signOut();
+                localStorage.removeItem("user_role");
+                window.location.href = "/login";
+              }}
+              className="w-full flex items-center gap-4 px-5 py-3.5 rounded-2xl transition-all duration-300 text-sm font-medium text-red-400 hover:text-red-300 hover:bg-red-500/10 border border-transparent"
+            >
+              <Lock className="w-4 h-4" /> Log Out
+            </button>
+          </div>
         </div>
 
         {/* Content Area */}
