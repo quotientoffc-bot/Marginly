@@ -360,7 +360,7 @@ export const GlassDock = React.forwardRef<HTMLDivElement, GlassDockProps>(
             setHoveredIndex(index);
         };
 
-        const getTooltipPosition = (index: number) => index * 52 + 12;
+        const getTooltipPosition = (index: number) => 44 + index * 56;
 
         return (
             <div
@@ -393,7 +393,7 @@ export const GlassDock = React.forwardRef<HTMLDivElement, GlassDockProps>(
                                 }}
                                 exit={{ opacity: 0, scale: 0.92, y: 12 }}
                                 transition={{ type: 'spring', stiffness: 120, damping: 18 }}
-                                className="absolute top-0 left-0 pointer-events-none z-30"
+                                className="absolute top-0 left-0 pointer-events-none z-30 flex justify-center items-center w-0"
                             >
                                 <div
                                     className={cn(
