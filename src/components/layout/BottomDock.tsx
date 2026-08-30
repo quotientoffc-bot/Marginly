@@ -45,13 +45,24 @@ export default function BottomDock() {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    const handleRoleCheck = () => {
+    const handleRoleCheck = async () => {
       let savedRole = localStorage.getItem("user_role");
       if (typeof window !== 'undefined' && window.location.search.includes('force_role=manager')) {
         savedRole = 'manager';
       } else if (typeof window !== 'undefined' && window.location.search.includes('force_role=client')) {
         savedRole = 'client';
       }
+      
+      if (savedRole === 'manager') {
+        const { createClient } = await import("@/lib/supabase-client");
+        const supabase = createClient();
+        const { data: { user } } = await supabase.auth.getUser();
+        const isFounder = user?.email === 'niravphil@gmail.com' || user?.email?.includes('mohammed');
+        if (!isFounder) {
+          savedRole = 'client';
+        }
+      }
+      
       if (savedRole) setRole(savedRole);
     };
     

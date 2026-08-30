@@ -28,26 +28,34 @@ export default function Dashboard() {
   const [telemetry, setTelemetry] = useState<any>(null);
   const [metrics, setMetrics] = useState<any>(null);
 
-useEffect(() => {
-    let savedRole = localStorage.getItem("user_role");
+  useEffect(() => {
+    async function verifyRole() {
+      const { createClient } = await import("@/lib/supabase-client");
+      const supabase = createClient();
+      const { data: { user } } = await supabase.auth.getUser();
+      
+      let savedRole = localStorage.getItem("user_role");
+      
+      // Check if they are actually a founder before allowing manager access
+      const isFounder = user?.email === 'niravphil@gmail.com' || user?.email?.includes('mohammed');
+      
+      if (savedRole === 'manager' && !isFounder) {
+        // Unauthorized! Force them back to client
+        savedRole = 'client';
+        localStorage.setItem('user_role', 'client');
+      }
+
+      if (savedRole) setRole(savedRole);
+      setMounted(true);
+
+      if (!savedRole || savedRole === "client") {
+        fetchDashboardMetrics().then(data => setMetrics(data));
+      } else if (savedRole === "manager") {
+        getAdminTelemetry().then(data => setTelemetry(data));
+      }
+    }
     
-    // Allow URL override for testing/demoing the 3 views
-    if (typeof window !== 'undefined' && window.location.search.includes('force_role=manager')) {
-      savedRole = 'manager';
-      localStorage.setItem('user_role', 'manager');
-    } else if (typeof window !== 'undefined' && window.location.search.includes('force_role=client')) {
-      savedRole = 'client';
-      localStorage.setItem('user_role', 'client');
-    }
-
-    if (savedRole) setRole(savedRole);
-    setMounted(true);
-
-    if (!savedRole || savedRole === "client") {
-      fetchDashboardMetrics().then(data => setMetrics(data));
-    } else if (savedRole === "manager") {
-      getAdminTelemetry().then(data => setTelemetry(data));
-    }
+    verifyRole();
   }, []);
 
   if (!mounted) return null;
