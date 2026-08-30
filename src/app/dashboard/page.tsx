@@ -97,7 +97,7 @@ useEffect(() => {
           </MagicBento>
         </section>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
+        <div className="mt-8">
           {/* Recent Client Signups */}
           <section className="glass-panel p-6 squircle-md border border-white/10">
             <div className="flex items-center justify-between mb-6">
@@ -120,30 +120,6 @@ useEffect(() => {
                   Fetching secure database records...
                 </div>
               )}
-            </div>
-          </section>
-
-          {/* Live Data Logs */}
-          <section className="glass-panel p-6 squircle-md border border-white/10 flex flex-col">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-medium text-white flex items-center gap-2">
-                <Terminal className="w-4 h-4 text-white/50" />
-                Live Security Logs
-              </h2>
-              <div className="flex items-center gap-2">
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-                </span>
-                <span className="text-xs text-white/40">Encrypted</span>
-              </div>
-            </div>
-            <div className="flex-1 bg-black/50 rounded-xl border border-white/5 p-4 font-mono text-[11px] text-green-400/80 overflow-y-auto space-y-2">
-              <p>[SYSTEM] Encrypted TLS connection established to Supabase.</p>
-              <p>[SYSTEM] RLS policies enforced. AES-256 enabled at rest.</p>
-              {telemetry?.recentClients?.map((c: any) => (
-                <p key={`log-${c.id}`}>[AUTH] Validated secure login for: {c.email}</p>
-              ))}
             </div>
           </section>
         </div>

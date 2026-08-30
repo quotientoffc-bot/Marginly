@@ -11,7 +11,8 @@ import {
   ShieldAlert,
   CalendarDays,
   Blocks,
-  PlaySquare
+  PlaySquare,
+  Terminal
 } from "lucide-react";
 import GlassDock from "@/components/ui/glass-dock";
 import { useEffect, useState } from "react";
@@ -29,6 +30,7 @@ const clientNavigation = [
 
 const managerNavigation = [
   { name: "Admin Console", href: "/dashboard", icon: ShieldAlert },
+  { name: "Security Logs", href: "/dashboard/logs", icon: Terminal },
   { name: "System Config", href: "/dashboard/settings", icon: Settings },
 ];
 
