@@ -35,45 +35,43 @@ export default function CinematicDemo() {
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: containerRef.current,
-          start: "top center",
-          onEnter: () => {
-            if (!isPlayingRef.current) {
-              isPlayingRef.current = true;
-              
-              // Start video sequence after text animations (approx 3s)
-              timeoutsRef.current.push(setTimeout(() => setSequence(1), 3000));
-              timeoutsRef.current.push(setTimeout(() => setSequence(2), 4500)); 
-              timeoutsRef.current.push(setTimeout(() => setSequence(3), 6500)); 
-              timeoutsRef.current.push(setTimeout(() => setSequence(4), 7500)); 
-              timeoutsRef.current.push(setTimeout(() => setSequence(5), 9500)); 
-            }
+          start: "top top",
+          end: "+=400%", // Pin for 400vh of scrolling
+          pin: true,
+          scrub: 1,
+          onUpdate: (self) => {
+            const prog = self.progress;
+            if (prog < 0.1) setSequence(0);
+            else if (prog < 0.3) setSequence(1);
+            else if (prog < 0.5) setSequence(2);
+            else if (prog < 0.7) setSequence(3);
+            else setSequence(4);
           }
         }
       });
 
-      // 1. Text fades out
+      // 1. Text fades out (0 to 0.1)
       tl.to(textRef.current, {
         opacity: 0,
         scale: 1.5,
         filter: "blur(10px)",
-        duration: 1,
-        delay: 1
-      });
+        duration: 0.1
+      }, 0);
 
-      // 2. Particle Text appears
+      // 2. Particle Text appears (0.1 to 0.2)
       tl.to(particleContainerRef.current, {
         opacity: 1,
-        duration: 0.5
-      });
+        duration: 0.1
+      }, 0.1);
 
-      // 3. Video fades in as Particles drift
+      // 3. Video fades in as Particles drift (0.2 onwards)
       tl.to(videoContainerRef.current, {
         opacity: 1,
         scale: 1,
         y: 0,
         pointerEvents: "auto",
-        duration: 1
-      }, "+=1");
+        duration: 0.2
+      }, 0.2);
 
     }, containerRef);
     
