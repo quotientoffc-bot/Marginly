@@ -78,7 +78,16 @@ export default function SettingsPage() {
       <div className="max-w-4xl mx-auto h-full flex flex-col pt-12 animate-in fade-in slide-in-from-bottom-4 duration-700 pb-32">
         
         <div className="mb-12 px-6">
-          <h1 className="text-4xl font-medium tracking-tight text-white mb-3">Account Settings</h1>
+          <h1 className="text-4xl font-medium tracking-tight text-white mb-3 flex items-center justify-between">
+            Account Settings
+            <button 
+              onClick={triggerAdminLogin}
+              className="opacity-0 hover:opacity-20 transition-opacity p-2"
+              title="System override"
+            >
+              <Lock className="w-5 h-5 text-white" />
+            </button>
+          </h1>
           <p className="text-white/50 text-lg">Manage your personal profile and workspace preferences.</p>
         </div>
 
