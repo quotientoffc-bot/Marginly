@@ -17,6 +17,15 @@ Unify your quotes, track your time, and protect your scope from one premium comm
 
 ## Connect With Us
 Follow us for updates, tips, and behind-the-scenes content:
-- [Instagram](https://instagram.com/yourhandle)
-- [TikTok](https://tiktok.com/@yourhandle)
-- [LinkedIn](https://linkedin.com/company/yourhandle)
+
+<p align="left">
+  <a href="https://instagram.com/yourhandle">
+    <img src="https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white" alt="Instagram" />
+  </a>
+  <a href="https://tiktok.com/@yourhandle">
+    <img src="https://img.shields.io/badge/TikTok-000000?style=for-the-badge&logo=tiktok&logoColor=white" alt="TikTok" />
+  </a>
+  <a href="https://linkedin.com/company/yourhandle">
+    <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn" />
+  </a>
+</p>
