@@ -64,7 +64,14 @@ export default function CinematicDemo() {
         duration: 0.1
       }, 0.1);
 
-      // 3. Video fades in as Particles drift (0.2 onwards)
+      // 3. Video fades in and Particles fade out (0.2 onwards)
+      tl.to(particleContainerRef.current, {
+        opacity: 0,
+        scale: 1.2,
+        filter: "blur(10px)",
+        duration: 0.1
+      }, 0.2);
+
       tl.to(videoContainerRef.current, {
         opacity: 1,
         scale: 1,
