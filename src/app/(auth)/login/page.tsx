@@ -34,6 +34,9 @@ export default function LoginPage() {
     setIsLoading(true);
     setError(null);
     
+    // Always default to client view when logging in
+    localStorage.setItem("user_role", "client");
+
     const { error } = await supabase.auth.signInWithPassword({
       email: data.email,
       password: data.password,
@@ -49,6 +52,9 @@ export default function LoginPage() {
 
   const handleGoogleSignIn = async () => {
     try {
+      // Always default to client view when logging in
+      localStorage.setItem("user_role", "client");
+      
       console.log("Initiating Google Sign In...");
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',

@@ -33,7 +33,7 @@ const clientNavigation = [
 
 const managerNavigation = [
   { name: "Admin Console", href: "/dashboard", icon: ShieldAlert },
-  { name: "Team Feed", href: "/dashboard/feed", icon: MessageSquare },
+  { name: "Client Database", href: "/dashboard/clients", icon: Users },
   { name: "Security Logs", href: "/dashboard/logs", icon: Terminal },
   { name: "System Config", href: "/dashboard/settings", icon: Settings },
 ];

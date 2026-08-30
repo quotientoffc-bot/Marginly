@@ -39,6 +39,9 @@ export default function SignupPage() {
     setIsLoading(true);
     setError(null);
     
+    // Always default to client view when signing up
+    localStorage.setItem("user_role", "client");
+
     const { data: authData, error } = await supabase.auth.signUp({
       email: data.email,
       password: data.password,
@@ -69,6 +72,10 @@ export default function SignupPage() {
       setError("You must accept the Terms of Service and Privacy Policy before continuing with Google.");
       return;
     }
+    
+    // Always default to client view when signing up
+    localStorage.setItem("user_role", "client");
+
     await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
