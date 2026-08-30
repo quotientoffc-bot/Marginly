@@ -72,13 +72,21 @@ export default function OnboardingPage() {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error("Authentication required.");
 
-      // Find team by password (In production, use invite codes + RLS bypass RPC, but for this prototype this is okay if they know the business name or if we just match the password exactly since passwords should be unique in this prototype scenario, but let's query the team via RPC or Edge Function... wait, RLS prevents reading teams if you aren't in them! So they can't query by password directly via select unless we loosen RLS for joining.)
+      // Securely call the server-side join_team function
+      const { data, error: rpcError } = await supabase.rpc('join_team', {
+        p_team_password: teamPassword
+      });
+
+      if (rpcError) throw rpcError;
       
-      // Since I added `team_password`, and RLS prevents reading, we actually need to hit a server action to join!
-      // I will implement a quick server action fallback here or just temporarily alert them.
-      alert("In this prototype, we'll route you directly. Team join successful!");
+      if (data && data.error) {
+        throw new Error(data.error);
+      }
       
+      const teamId = data.team_id;
+
       localStorage.setItem("user_role", "client"); // 'client' acts as employee in our UI
+      localStorage.setItem("team_id", teamId);
       router.push("/dashboard");
       
     } catch (err: any) {
