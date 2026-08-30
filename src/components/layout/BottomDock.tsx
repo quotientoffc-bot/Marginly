@@ -57,7 +57,7 @@ export default function BottomDock() {
         const { createClient } = await import("@/lib/supabase-client");
         const supabase = createClient();
         const { data: { user } } = await supabase.auth.getUser();
-        const isFounder = user?.email === 'niravphil@gmail.com' || user?.email?.includes('mohammed');
+        const isFounder = user?.email === 'niravphil@gmail.com' || user?.email === 'quotientoffc@gmail.com';
         if (!isFounder) {
           savedRole = 'client';
         }

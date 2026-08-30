@@ -25,6 +25,7 @@ import { getAdminTelemetry, fetchDashboardMetrics } from "@/app/actions";
 export default function Dashboard() {
   const [role, setRole] = useState("client");
   const [mounted, setMounted] = useState(false);
+  const [verifying, setVerifying] = useState(true);
   const [telemetry, setTelemetry] = useState<any>(null);
   const [metrics, setMetrics] = useState<any>(null);
 
@@ -36,8 +37,17 @@ export default function Dashboard() {
       
       let savedRole = localStorage.getItem("user_role");
       
-      // Check if they are actually a founder before allowing manager access
-      const isFounder = user?.email === 'niravphil@gmail.com' || user?.email?.includes('mohammed');
+      // Allow URL override for testing/demoing the 3 views
+      if (typeof window !== 'undefined' && window.location.search.includes('force_role=manager')) {
+        savedRole = 'manager';
+        localStorage.setItem('user_role', 'manager');
+      } else if (typeof window !== 'undefined' && window.location.search.includes('force_role=client')) {
+        savedRole = 'client';
+        localStorage.setItem('user_role', 'client');
+      }
+      
+      // Check if they are exactly quotientoffc@gmail.com or niravphil@gmail.com
+      const isFounder = user?.email === 'niravphil@gmail.com' || user?.email === 'quotientoffc@gmail.com';
       
       if (savedRole === 'manager' && !isFounder) {
         // Unauthorized! Force them back to client
@@ -47,6 +57,7 @@ export default function Dashboard() {
 
       if (savedRole) setRole(savedRole);
       setMounted(true);
+      setVerifying(false);
 
       if (!savedRole || savedRole === "client") {
         fetchDashboardMetrics().then(data => setMetrics(data));
@@ -58,7 +69,7 @@ export default function Dashboard() {
     verifyRole();
   }, []);
 
-  if (!mounted) return null;
+  if (!mounted || verifying) return null;
 
   if (role === "manager") {
     // MANAGER (Super Admin) - Sees System Telemetry
