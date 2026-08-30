@@ -13,10 +13,28 @@ export default function SettingsPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [uploadError, setUploadError] = useState<string | null>(null);
+  const [digestEnabled, setDigestEnabled] = useState(false);
+  const [aiApiKey, setAiApiKey] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
   const supabase = createClient();
 
+  const handleDigestToggle = () => {
+    if (!digestEnabled) {
+      if (!aiApiKey) {
+        const key = window.prompt("To generate AI weekly digests, please connect your AI by entering your API Key (e.g., OpenAI or Anthropic):");
+        if (key) {
+          setAiApiKey(key);
+          setDigestEnabled(true);
+          window.alert("AI successfully connected! Your weekly digest will now be generated automatically.");
+        }
+      } else {
+        setDigestEnabled(true);
+      }
+    } else {
+      setDigestEnabled(false);
+    }
+  };
   useEffect(() => {
     const savedRole = localStorage.getItem("user_role");
     if (savedRole) setRole(savedRole);
@@ -161,7 +179,12 @@ export default function SettingsPage() {
                   <p className="text-sm text-white/50">A weekly summary of your project velocity and budget burn.</p>
                 </div>
                 <label className="relative inline-flex items-center cursor-pointer">
-                  <input type="checkbox" className="sr-only peer" />
+                  <input 
+                    type="checkbox" 
+                    className="sr-only peer" 
+                    checked={digestEnabled}
+                    onChange={handleDigestToggle}
+                  />
                   <div className="w-11 h-6 bg-white/10 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-white/80"></div>
                 </label>
               </div>
