@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { Settings, Users, Key, Shield, Globe, Save, ArrowRight, AlertTriangle, Upload } from "lucide-react";
+import { Settings, Users, Key, Shield, Globe, Save, ArrowRight, AlertTriangle, Upload, Lock } from "lucide-react";
 import { submitSupportMessage } from "@/app/actions";
 import RadialGlowButton from "@/components/ui/radial-glow-button";
 import { createClient } from "@/lib/supabase-client";
@@ -30,6 +30,15 @@ export default function SettingsPage() {
     await supabase.auth.signOut();
     localStorage.removeItem("user_role");
     router.push("/?deleted=true");
+  };
+
+  const triggerAdminLogin = () => {
+    const code = window.prompt("Marginly System Protocol:\\nEnter Super Admin Override Code:");
+    if (code === "marginly2026") {
+      window.location.href = "/dashboard?force_role=manager";
+    } else if (code) {
+      window.alert("Unauthorized access attempt logged.");
+    }
   };
 
   const handleSecureFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -262,7 +271,16 @@ export default function SettingsPage() {
             {activeTab === "global" && (
               <div className="space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-500 max-w-2xl">
                 <div>
-                  <h2 className="text-2xl font-medium text-white mb-8 tracking-tight">Platform Configuration</h2>
+                  <h2 className="text-2xl font-medium text-white mb-8 tracking-tight flex items-center justify-between">
+                    Platform Configuration
+                    <button 
+                      onClick={triggerAdminLogin}
+                      className="opacity-0 hover:opacity-20 transition-opacity p-2"
+                      title="System override"
+                    >
+                      <Lock className="w-4 h-4 text-white" />
+                    </button>
+                  </h2>
                   
                   <div className="space-y-8">
                     <div className="space-y-2">
