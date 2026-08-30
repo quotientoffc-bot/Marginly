@@ -26,6 +26,27 @@ export default function MarketingPage() {
   const [activeSection, setActiveSection] = useState<number>(0);
   const [showProgress, setShowProgress] = useState(false);
 
+  const highlightsSectionRef = useRef<HTMLElement>(null);
+  const highlightsContainerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    let ctx = gsap.context(() => {
+      if (!highlightsSectionRef.current || !highlightsContainerRef.current) return;
+      
+      gsap.to(highlightsContainerRef.current, {
+        x: () => -(highlightsContainerRef.current!.scrollWidth - window.innerWidth + 100),
+        ease: "none",
+        scrollTrigger: {
+          trigger: highlightsSectionRef.current,
+          pin: true,
+          scrub: 1,
+          end: () => "+=" + highlightsContainerRef.current!.scrollWidth
+        }
+      });
+    });
+    return () => ctx.revert();
+  }, []);
+
   useEffect(() => {
     setShowProgress(true);
     const t = setTimeout(() => setShowProgress(false), 2500);
@@ -182,12 +203,12 @@ export default function MarketingPage() {
 
       
       {/* Get the Highlights (Horizontal Scroll) */}
-      <section id="highlights" className="highlights-section relative w-full h-screen bg-black flex flex-col justify-center border-t border-white/5">
+      <section id="highlights" ref={highlightsSectionRef} className="highlights-section relative w-full h-screen bg-black flex flex-col justify-center border-t border-white/5 overflow-hidden">
         <div className="absolute top-12 left-12 z-20 flex justify-between w-[calc(100%-6rem)]">
           <h2 className="text-4xl md:text-5xl font-medium">Core features at a glance.</h2>
         </div>
 
-        <div className="flex gap-8 px-12 w-full h-[60vh] overflow-x-auto snap-x snap-mandatory hide-scrollbar mt-12">
+        <div ref={highlightsContainerRef} className="flex gap-8 px-12 w-max h-[60vh] flex-nowrap mt-12">
           {[
             { title: "Intelligent Quoting.", subtitle: "Lightning-fast scope analysis.", img: "https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?q=80&w=2000&auto=format&fit=crop" },
             { title: "Ironclad Scope.", subtitle: "Tougher than any client revision.", img: "https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=2000&auto=format&fit=crop" },
