@@ -104,6 +104,11 @@ export async function getAdminTelemetry() {
       throw new Error("Unauthorized");
     }
 
+    const isFounder = user.email === 'niravphil@gmail.com' || user.email === 'quotientoffc@gmail.com';
+    if (!isFounder) {
+      throw new Error("Strict Server-Side Security: Unauthorized Admin Access");
+    }
+
     // NATIVE ROW LEVEL SECURITY ENFORCEMENT
     // Because we use the authenticated client, these queries automatically 
     // restrict to ONLY the rows where user_id matches the logged-in user.
