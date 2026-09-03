@@ -1,4 +1,6 @@
-"use client";
+import re
+
+content = '''"use client";
 
 import { ArrowRight, Mail, Zap, Clock, Briefcase, FileText, Plus } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
@@ -219,3 +221,7 @@ export default function MarketingPage() {
     </div>
   );
 }
+'''
+
+with open('src/app/(marketing)/page.tsx', 'w') as f:
+    f.write(content)
