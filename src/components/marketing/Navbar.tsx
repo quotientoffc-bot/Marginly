@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { ChevronDown } from "lucide-react";
 import Link from "next/link";
 import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 
@@ -14,7 +15,7 @@ export default function Navbar() {
   return (
     <motion.nav 
       animate={{ 
-        backgroundColor: scrolled ? "rgba(5, 5, 5, 0.8)" : "rgba(5, 5, 5, 0)",
+        backgroundColor: scrolled ? "rgba(5, 5, 5, 0.5)" : "rgba(5, 5, 5, 0)",
         backdropFilter: scrolled ? "blur(20px)" : "blur(0px)",
         borderBottom: scrolled ? "1px solid rgba(255,255,255,0.05)" : "1px solid rgba(255,255,255,0)"
       }}
@@ -23,9 +24,9 @@ export default function Navbar() {
     >
       {/* Left Links */}
       <div className="hidden md:flex items-center gap-8 text-sm font-medium tracking-wide">
-        <Link href="#method" className="hover:text-white/70 transition-colors flex items-center gap-1">The Method <span className="text-xs opacity-50">v</span></Link>
-        <Link href="#who" className="hover:text-white/70 transition-colors flex items-center gap-1">For Who <span className="text-xs opacity-50">v</span></Link>
-        <Link href="#offers" className="hover:text-white/70 transition-colors">Our Offers</Link>
+        <Link href="#features" className="hover:text-white/70 transition-colors flex items-center gap-1">Features <ChevronDown className="w-3 h-3 opacity-50" /></Link>
+        <Link href="#use-cases" className="hover:text-white/70 transition-colors flex items-center gap-1">Use Cases <ChevronDown className="w-3 h-3 opacity-50" /></Link>
+        <Link href="#pricing" className="hover:text-white/70 transition-colors">Pricing</Link>
       </div>
 
       {/* Center Logo */}
@@ -37,11 +38,10 @@ export default function Navbar() {
       {/* Right Links & CTA */}
       <div className="flex items-center gap-8 text-sm font-medium tracking-wide">
         <div className="hidden sm:flex items-center gap-8">
-          <button className="opacity-50 hover:opacity-100 transition-opacity">EN</button>
-          <Link href="/login" className="hover:text-white/70 transition-colors">Login</Link>
+          <Link href="/login" className="hover:text-white/70 transition-colors">Log In</Link>
         </div>
         <Link href="/dashboard" className="px-6 py-2.5 rounded-full border border-white/30 hover:bg-white/10 transition-colors">
-          Start your free trial
+          Get Marginly
         </Link>
       </div>
     </motion.nav>
