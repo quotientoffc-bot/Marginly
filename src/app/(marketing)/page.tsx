@@ -98,12 +98,12 @@ export default function MarketingPage() {
       </div>
 
       {/* 3. 3D Immersive Cards Cascade */}
-      <div className="relative z-20 border-t border-white/10 bg-[#050505]">
+      <div id="features" className="relative z-20 border-t border-white/10 bg-[#050505]">
         <ImmersiveCards />
       </div>
 
       {/* 4. Asymmetrical Bento Grid (Double Bezel Architecture) */}
-      <section className="relative w-full min-h-[100dvh] bg-[#050505] flex flex-col justify-center py-32 px-4 md:px-12 border-t border-white/10 z-20">
+      <section id="use-cases" className="relative w-full min-h-[100dvh] bg-[#050505] flex flex-col justify-center py-32 px-4 md:px-12 border-t border-white/10 z-20">
         <div className="max-w-7xl mx-auto w-full">
           <h2 className="text-4xl md:text-5xl lg:text-7xl font-bold tracking-tighter text-balance mb-16 text-center">
             The architecture of <br/> <span className="text-white/40">premium margins.</span>
