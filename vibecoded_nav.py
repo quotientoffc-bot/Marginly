@@ -1,4 +1,4 @@
-"use client";
+content = '''"use client";
 import { useState } from "react";
 import Link from "next/link";
 import { motion, useScroll, useMotionValueEvent } from "framer-motion";
@@ -47,3 +47,7 @@ export default function Navbar() {
     </motion.nav>
   );
 }
+'''
+
+with open('src/components/marketing/Navbar.tsx', 'w') as f:
+    f.write(content)

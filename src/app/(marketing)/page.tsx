@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight, Mail, Zap, Clock, Briefcase, FileText, Plus } from "lucide-react";
+import { ArrowRight, Play, Mail, Zap, Clock, Briefcase, FileText, Plus } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
@@ -33,56 +33,62 @@ export default function MarketingPage() {
 
       <Navbar />
 
-      {/* 1. Hero Section (3D Mesh + Parallax) */}
-      <section id="hero" ref={heroRef} className="relative w-full min-h-[100dvh] pt-32 pb-20 z-10 flex flex-col items-center justify-center perspective-[1000px]">
-        <div className="relative z-10 flex flex-col items-center text-center px-6 w-full max-w-5xl mx-auto">
-          
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.2 }}
-            className="text-white/40 font-medium tracking-widest uppercase text-xs mb-6 px-4 py-1.5 rounded-full ring-1 ring-white/10 bg-white/5"
-          >
-            <span translate="no">Marginly</span> 1.0
-          </motion.div>
-          
-          <motion.h1 
-            style={{ y: textY }}
-            initial={{ y: 50, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="text-5xl md:text-8xl lg:text-[120px] font-bold tracking-tighter leading-[0.85] text-balance"
-          >
-            The Agency <br />
-            <span className="text-white/40">Operating System.</span>
-          </motion.h1>
-          
-          <motion.p
-            style={{ y: textY }}
-            initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 1, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-            className="mt-8 text-lg md:text-2xl text-white/50 max-w-2xl text-center font-medium text-balance"
-          >
-            Unify your quotes, track your time, and protect your scope from one premium command center.
-          </motion.p>
+      {/* 1. Hero Section (Vibecoded Editorial Luxury) */}
+      <section id="hero" ref={heroRef} className="relative w-full min-h-[100dvh] z-10 overflow-hidden">
+        
+        {/* Full-bleed Cinematic Background */}
+        <div className="absolute inset-0 z-0">
+          <div className="absolute inset-0 bg-[#050505]/40 z-10" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent z-10" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#050505] via-[#050505]/50 to-transparent z-10" />
+          <motion.img 
+            style={{ y: textY, scale: meshScale }}
+            src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop" 
+            alt="Cinematic abstract" 
+            className="w-full h-full object-cover opacity-60"
+          />
+        </div>
 
-          {/* Double Bezel CTA */}
+        <div className="relative z-20 w-full h-[100dvh] mx-auto pointer-events-none">
+          
+          {/* Bottom Left: Huge Editorial Typography & CTA */}
           <motion.div 
             style={{ y: textY }}
-            initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 1, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className="flex flex-col items-center gap-6 mt-12 mb-16 z-20"
+            initial={{ y: 50, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 1.2, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            className="absolute left-6 md:left-16 bottom-16 md:bottom-24 max-w-2xl pointer-events-auto"
           >
-            <Link href="/dashboard" className="pl-8 pr-2 py-2 min-h-[44px] flex items-center justify-center rounded-full bg-[#FDFBF7] hover:bg-white text-black font-medium transition-colors shadow-[0_0_40px_rgba(253,251,247,0.15)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 group">
-              Get {" "}<span translate="no">Marginly</span>{" "} Free
-              <div className="ml-4 w-10 h-10 rounded-full bg-black/10 flex items-center justify-center group-hover:bg-black/20 transition-colors">
-                <ArrowRight className="w-5 h-5 text-black" />
+            <h1 className="text-5xl md:text-7xl lg:text-[90px] font-medium tracking-tight text-[#FDFBF7] leading-[1.05] mb-6 drop-shadow-2xl">
+              The Agency <br/> 
+              <span className="font-serif italic text-white/80 font-light tracking-normal">Operating System.</span>
+            </h1>
+            <p className="text-lg md:text-xl text-white/70 mb-10 max-w-md font-medium leading-relaxed drop-shadow-md">
+              Unify your quotes, track your time, and protect your scope from one premium command center.
+            </p>
+            
+            <Link href="/dashboard" className="inline-flex items-center justify-center min-h-[44px] gap-4 pl-8 pr-2 py-2 rounded-full border border-white/20 bg-white/10 backdrop-blur-md hover:bg-white/20 transition-colors text-[#FDFBF7] font-medium text-lg shadow-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 group">
+              Start your free trial
+              <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-white/20 transition-colors">
+                <ArrowRight className="w-5 h-5 text-[#FDFBF7]" />
               </div>
             </Link>
           </motion.div>
 
-          {/* 3D Elastic Mesh wired to scroll */}
-          <motion.div
-            style={{ scale: meshScale, rotateX: meshRotateX, opacity: meshOpacity, transformStyle: "preserve-3d" }}
-            initial={{ y: 60, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 1.2, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="relative w-full max-w-6xl aspect-[1024/461] mx-auto z-10"
+          {/* Bottom Right: Floating Video/Demo Card */}
+          <motion.div 
+            initial={{ y: 80, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 1.4, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+            className="hidden md:flex absolute right-16 bottom-24 w-[400px] aspect-[16/10] rounded-[2rem] p-1.5 bg-white/5 border border-white/10 backdrop-blur-2xl overflow-hidden shadow-2xl pointer-events-auto cursor-pointer group"
           >
-            <ElasticMesh image="/dashboard-screen.png" interaction="drag" tilt={16} shading={1} />
+            <div className="relative w-full h-full rounded-[calc(2rem-0.375rem)] overflow-hidden bg-black">
+              <img src="/dashboard-screen.png" className="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:scale-105 transition-transform duration-1000 ease-out" />
+              <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500" />
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-xl border border-white/40 flex items-center justify-center group-hover:bg-white/30 group-hover:scale-110 transition-all duration-500">
+                  <Play className="w-6 h-6 text-white ml-1" fill="currentColor" />
+                </div>
+              </div>
+            </div>
           </motion.div>
+
         </div>
       </section>
 
