@@ -6,7 +6,7 @@ import Link from "next/link";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 
 // Components
-import CinematicDemo from "@/components/marketing/CinematicDemo";
+
 import Navbar from "@/components/marketing/Navbar";
 import ScrollExpand from "@/components/marketing/ScrollExpand";
 import ImmersiveCards from "@/components/marketing/ImmersiveCards";
@@ -92,10 +92,7 @@ export default function MarketingPage() {
         </div>
       </section>
 
-      {/* 2. Cinematic Text Intro */}
-      <div className="relative z-20 border-t border-white/10 bg-[#050505]">
-        <CinematicDemo />
-      </div>
+      
 
       {/* 3. 3D Immersive Cards Cascade */}
       <div id="features" className="relative z-20 border-t border-white/10 bg-[#050505]">
@@ -180,7 +177,7 @@ export default function MarketingPage() {
             <ParticleText
                 text="SCALE"
                 particleSize={2.5}
-                density={80}
+                density={4}
                 color="#FDFBF7"
                 highlightColor="#8B5CF6"
                 gatherDuration={1200}
