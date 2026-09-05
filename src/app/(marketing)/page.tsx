@@ -10,7 +10,7 @@ import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion"
 import DemoVideoModal from "@/components/marketing/DemoVideoModal";
 import Navbar from "@/components/marketing/Navbar";
 import ScrollExpand from "@/components/marketing/ScrollExpand";
-import ImmersiveCards from "@/components/marketing/ImmersiveCards";
+import MassiveFeatures from "@/components/marketing/MassiveFeatures";
 import ElasticMesh from "@/components/marketing/ElasticMesh";
 import ParticleText from "@/components/marketing/ParticleText";
 
@@ -97,9 +97,9 @@ export default function MarketingPage() {
 
       
 
-      {/* 3. 3D Immersive Cards Cascade */}
+      {/* 3. Massive 3D Features (Un-clumped) */}
       <div id="features" className="relative z-20 border-t border-white/10 bg-[#050505]">
-        <ImmersiveCards />
+        <MassiveFeatures />
       </div>
 
       {/* 4. Asymmetrical Bento Grid (Double Bezel Architecture) */}
@@ -186,9 +186,9 @@ export default function MarketingPage() {
                 gatherDuration={1200}
                 scatter={0.15}
                 stagger={0.05}
-                pointerRepel={true}
+                pointerRepel={60}
                 repelRadius={80}
-                idleDrift={true}
+                idleDrift={1.2}
                 trigger="hover"
                 className="w-full h-full font-bold uppercase tracking-tighter"
             />
