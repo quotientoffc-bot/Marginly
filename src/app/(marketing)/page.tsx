@@ -7,6 +7,7 @@ import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion"
 
 // Components
 
+import DemoVideoModal from "@/components/marketing/DemoVideoModal";
 import Navbar from "@/components/marketing/Navbar";
 import ScrollExpand from "@/components/marketing/ScrollExpand";
 import ImmersiveCards from "@/components/marketing/ImmersiveCards";
@@ -15,6 +16,7 @@ import ParticleText from "@/components/marketing/ParticleText";
 
 export default function MarketingPage() {
   const heroRef = useRef<HTMLDivElement>(null);
+  const [isVideoOpen, setIsVideoOpen] = useState(false);
   
   // Hero Scroll Parallax
   const { scrollYProgress: heroScroll } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
@@ -77,6 +79,7 @@ export default function MarketingPage() {
           <motion.div 
             initial={{ y: 80, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 1.4, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
             className="hidden md:flex absolute right-16 bottom-24 w-[400px] aspect-[16/10] rounded-[2rem] p-1.5 bg-white/5 border border-white/10 backdrop-blur-2xl overflow-hidden shadow-2xl pointer-events-auto cursor-pointer group"
+            onClick={() => setIsVideoOpen(true)}
           >
             <div className="relative w-full h-full rounded-[calc(2rem-0.375rem)] overflow-hidden bg-black">
               <img src="/dashboard-screen.png" className="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:scale-105 transition-transform duration-1000 ease-out" />
@@ -219,6 +222,7 @@ export default function MarketingPage() {
         <p>Copyright © 2026 Marginly Inc. All rights reserved.</p>
       </footer>
       
+      <DemoVideoModal isOpen={isVideoOpen} onClose={() => setIsVideoOpen(false)} />
     </div>
   );
 }
