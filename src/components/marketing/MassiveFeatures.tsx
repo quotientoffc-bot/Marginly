@@ -3,7 +3,8 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Scene from "./Scene";
+import dynamic from "next/dynamic";
+const Scene = dynamic(() => import("./Scene"), { ssr: false });
 
 export default function MassiveFeatures() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -13,8 +14,11 @@ export default function MassiveFeatures() {
     gsap.registerPlugin(ScrollTrigger);
     
     let ctx = gsap.context(() => {
-      // Pin the entire container for the duration of the 3 sections
-      ScrollTrigger.create({
+      try {
+        if (!containerRef.current) return;
+        
+        // Pin the entire container for the duration of the 3 sections
+        ScrollTrigger.create({
         trigger: containerRef.current,
         start: "top top",
         end: "+=300%",
@@ -55,7 +59,7 @@ export default function MassiveFeatures() {
           }
         });
       });
-      
+      } catch (e) { console.error("GSAP Error:", e); }
     }, containerRef);
     
     return () => ctx.revert();
