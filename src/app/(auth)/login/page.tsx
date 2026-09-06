@@ -9,6 +9,15 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createClient } from "@/lib/supabase-client";
 
+import { useRef, useEffect } from "react";
+// import { createAvatar, type AvatarController } from '@bible-strong/avatar-react';
+// import '@bible-strong/avatar-react/styles.css';
+// import avatarJson from './avatar.avatar.json';
+
+// NOTE: Once you upload avatar.avatar.json, uncomment the lines above and below
+// const StrobiAvatar = createAvatar(avatarJson);
+
+
 const loginSchema = z.object({
   email: z.string().email("Please enter a valid email address."),
   password: z.string().min(6, "Password must be at least 6 characters."),
@@ -21,6 +30,29 @@ export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const supabase = createClient();
+
+  // Avatar Controller Ref
+  // const avatarRef = useRef<AvatarController>(null);
+  
+  // Mouse tracking logic for the avatar container
+  const containerRef = useRef<HTMLDivElement>(null);
+  
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!containerRef.current) return;
+      const { clientX, clientY } = e;
+      const { innerWidth, innerHeight } = window;
+      
+      const x = (clientX / innerWidth - 0.5) * 20; // max 20deg tilt
+      const y = (clientY / innerHeight - 0.5) * -20;
+      
+      containerRef.current.style.transform = `perspective(1000px) rotateY(${x}deg) rotateX(${y}deg)`;
+    };
+    
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
 
   const {
     register,
@@ -42,10 +74,18 @@ export default function LoginPage() {
       password: data.password,
     });
 
+
     if (error) {
       setError(error.message);
       setIsLoading(false);
-    } else {
+      
+      // Trigger the wrong password animation
+      // if (avatarRef.current) {
+      //   avatarRef.current.play('wrong_password'); // or whatever the red animation key is
+      //   avatarRef.current.setExpression('sad');
+      // }
+    }
+ else {
       router.push("/dashboard");
     }
   };
@@ -87,12 +127,19 @@ export default function LoginPage() {
       </div>
 
       <div className="glass-panel p-10 squircle-lg w-full max-w-md relative z-10 border border-white/10 shadow-2xl">
+        
         <div className="flex items-center justify-center mb-8">
-          <img src="/logo.jpg" alt="Marginly" className="w-10 h-10 rounded-xl object-cover mr-3 shadow-lg border border-white/10" />
-          <span className="text-2xl font-medium tracking-wide text-white">Marginly</span>
+          <div ref={containerRef} className="relative w-24 h-24 mb-4 transition-transform duration-75 ease-out flex items-center justify-center bg-white/5 rounded-full border border-white/10 shadow-2xl">
+            {/* 
+              Uncomment when avatar.avatar.json is available:
+              <StrobiAvatar ref={avatarRef} defaultAnimation="neutral" size={96} className="w-full h-full" />
+            */}
+            <span className="text-[10px] text-white/30 text-center px-2">Waiting for avatar.json</span>
+          </div>
         </div>
-
+        
         <h1 className="text-2xl font-medium text-white mb-2 text-center">Welcome back.</h1>
+
         <p className="text-white/50 text-center mb-8 text-sm">Sign in to your workspace.</p>
 
         {error && (
