@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useMemo } from "react";
+import { useRef, useMemo, Suspense } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Environment, MeshTransmissionMaterial, Float, Sparkles, ContactShadows } from "@react-three/drei";
 import * as THREE from "three";
@@ -44,6 +44,7 @@ export default function Scene() {
   return (
     <div className="absolute inset-0 z-0 pointer-events-none">
       <Canvas camera={{ position: [0, 0, 8], fov: 45 }}>
+        <Suspense fallback={null}>
         <ambientLight intensity={0.5} />
         <directionalLight position={[10, 10, 5]} intensity={1.5} color="#4ADE80" />
         <directionalLight position={[-10, -10, -5]} intensity={1.5} color="#F87171" />
@@ -55,6 +56,7 @@ export default function Scene() {
         <Sparkles count={100} scale={12} size={2} speed={0.4} opacity={0.2} color="#ffffff" />
         
         <Environment preset="city" />
+        </Suspense>
       </Canvas>
     </div>
   );
