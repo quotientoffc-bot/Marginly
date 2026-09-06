@@ -214,9 +214,10 @@ export default function MarketingPage() {
             
       {/* Footer */}
       <footer className="w-full border-t border-white/10 py-12 px-8 flex flex-col md:flex-row justify-between items-center gap-6 z-20 bg-[#050505] relative text-xs text-white/40 font-medium">
-        <div className="flex gap-4">
+        <div className="flex gap-4 flex-wrap">
           <Link href="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
           <Link href="/terms" className="hover:text-white transition-colors">Terms of Use</Link>
+          <Link href="/cookies" className="hover:text-white transition-colors">Cookie Policy</Link>
           <Link href="/refunds" className="hover:text-white transition-colors">Sales and Refunds</Link>
         </div>
         <p>Copyright © 2026 Marginly Inc. All rights reserved.</p>
