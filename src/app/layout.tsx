@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Outfit, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { AnimatedRays } from "@/components/ui/animated-rays";
+import SmoothScroll from "@/components/SmoothScroll";
 
 const outfit = Outfit({
   variable: "--font-outfit",
@@ -28,7 +29,7 @@ export default function RootLayout({
       <body className={`${outfit.variable} ${jbMono.variable} antialiased min-h-screen selection:bg-white/20 selection:text-white bg-black text-white font-sans`} suppressHydrationWarning>
         <AnimatedRays className="absolute inset-0 z-0 pointer-events-none opacity-50" />
         <div className="relative z-10 w-full min-h-screen">
-          {children}
+          <SmoothScroll>{children}</SmoothScroll>
         </div>
       </body>
     </html>
