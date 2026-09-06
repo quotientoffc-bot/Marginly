@@ -3,6 +3,7 @@ import { Outfit, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { AnimatedRays } from "@/components/ui/animated-rays";
 import SmoothScroll from "@/components/SmoothScroll";
+import CookieConsent from "@/components/CookieConsent";
 
 const outfit = Outfit({
   variable: "--font-outfit",
@@ -31,6 +32,7 @@ export default function RootLayout({
         <div className="relative z-10 w-full min-h-screen">
           <SmoothScroll>{children}</SmoothScroll>
         </div>
+        <CookieConsent />
       </body>
     </html>
   );
