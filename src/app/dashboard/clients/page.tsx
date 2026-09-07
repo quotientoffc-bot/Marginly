@@ -4,10 +4,18 @@ import { useEffect, useState } from "react";
 import { Search, Filter, Activity, Users, Plus } from "lucide-react";
 import { getAdminTelemetry } from "@/app/actions";
 import GenerateButton from "@/components/ui/generate-button";
+import CreateForm from "@/components/ui/CreateForm";
+import { createClient } from "@/app/dashboard/actions";
 
 export default function ClientsPage() {
   const [role, setRole] = useState<string>("client");
   const [adminClients, setAdminClients] = useState<any[]>([]);
+  
+  const clientFields = [
+    { name: 'name', label: 'Business Name', type: 'text' },
+    { name: 'email', label: 'Contact Email', type: 'email' }
+  ];
+
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -42,9 +50,7 @@ export default function ClientsPage() {
             <h1 className="text-3xl font-medium tracking-tight text-white mb-2">My Clients</h1>
             <p className="text-white/50">Manage the clients your agency is working with.</p>
           </div>
-          <button className="bg-white text-black px-4 py-2 rounded-xl text-sm font-medium hover:bg-white/90 transition-all flex items-center gap-2">
-            <Plus className="w-4 h-4" /> Add Client
-          </button>
+          <CreateForm title="New Client" buttonLabel="Add Client" action={createClient} fields={clientFields} />
         </div>
 
         <div className="flex gap-4 mb-8">
