@@ -2,7 +2,7 @@
 
 import { useRef, useMemo, Suspense } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { Environment, MeshTransmissionMaterial, Float, Sparkles, ContactShadows } from "@react-three/drei";
+import { Environment, MeshTransmissionMaterial, Float, Sparkles, ContactShadows, Lightformer } from "@react-three/drei";
 import * as THREE from "three";
 
 function GlassShape({ position, rotation, scale, type }: any) {
@@ -55,7 +55,14 @@ export default function Scene() {
 
         <Sparkles count={100} scale={12} size={2} speed={0.4} opacity={0.2} color="#ffffff" />
         
-        <Environment preset="city" />
+        <Environment resolution={256}>
+          <group rotation={[-Math.PI / 2, 0, 0]}>
+            <Lightformer intensity={4} rotation-x={Math.PI / 2} position={[0, 5, -9]} scale={[10, 10, 1]} />
+            <Lightformer intensity={2} rotation-y={Math.PI / 2} position={[-5, 1, -1]} scale={[10, 2, 1]} />
+            <Lightformer intensity={2} rotation-y={-Math.PI / 2} position={[10, 1, 0]} scale={[20, 2, 1]} />
+            <Lightformer intensity={2} rotation-y={Math.PI} position={[0, -5, 0]} scale={[10, 10, 1]} color="#4ADE80" />
+          </group>
+        </Environment>
         </Suspense>
       </Canvas>
     </div>
