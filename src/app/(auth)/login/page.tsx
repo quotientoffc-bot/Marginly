@@ -43,10 +43,19 @@ export default function LoginPage() {
       const { clientX, clientY } = e;
       const { innerWidth, innerHeight } = window;
       
-      const x = (clientX / innerWidth - 0.5) * 20; // max 20deg tilt
-      const y = (clientY / innerHeight - 0.5) * -20;
+      // Calculate normalized coordinates (-1 to 1)
+      const nx = (clientX / innerWidth) * 2 - 1;
+      const ny = (clientY / innerHeight) * 2 - 1;
       
-      containerRef.current.style.transform = `perspective(1000px) rotateY(${x}deg) rotateX(${y}deg)`;
+      // Aggressive tilt (up to 35 degrees)
+      const rotateX = ny * -35; 
+      const rotateY = nx * 35;
+      
+      // Slight translation towards the cursor
+      const translateX = nx * 20;
+      const translateY = ny * 20;
+      
+      containerRef.current.style.transform = `perspective(1000px) translate3d(${translateX}px, ${translateY}px, 0) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
     };
     
     window.addEventListener('mousemove', handleMouseMove);
@@ -129,8 +138,8 @@ export default function LoginPage() {
       <div className="glass-panel p-10 squircle-lg w-full max-w-md relative z-10 border border-white/10 shadow-2xl">
         
         <div className="flex items-center justify-center mb-8">
-          <div ref={containerRef} className="relative w-24 h-24 mb-4 transition-transform duration-75 ease-out flex items-center justify-center bg-white/5 rounded-full border border-white/10 shadow-2xl">
-            <StrobiAvatar ref={avatarRef} defaultAnimation="idle" size={96} className="w-full h-full" />
+          <div ref={containerRef} className="relative w-40 h-40 mb-4 transition-transform duration-75 ease-out flex items-center justify-center bg-white/5 rounded-full border border-white/10 shadow-2xl">
+            <StrobiAvatar ref={avatarRef} defaultAnimation="idle" size={160} className="w-full h-full" />
           </div>
         </div>
         
