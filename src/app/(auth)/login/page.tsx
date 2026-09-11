@@ -10,12 +10,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { createClient } from "@/lib/supabase-client";
 
 import { useRef, useEffect } from "react";
-// import { createAvatar, type AvatarController } from '@bible-strong/avatar-react';
-// import '@bible-strong/avatar-react/styles.css';
-// import avatarJson from './avatar.avatar.json';
+import { createAvatar, type AvatarController } from '@bible-strong/avatar-react';
+import '@bible-strong/avatar-react/styles.css';
+import avatarJson from './avatar.avatar.json';
 
-// NOTE: Once you upload avatar.avatar.json, uncomment the lines above and below
-// const StrobiAvatar = createAvatar(avatarJson);
+
+const StrobiAvatar = createAvatar(avatarJson as any);
 
 
 const loginSchema = z.object({
@@ -32,7 +32,7 @@ export default function LoginPage() {
   const supabase = createClient();
 
   // Avatar Controller Ref
-  // const avatarRef = useRef<AvatarController>(null);
+  const avatarRef = useRef<AvatarController>(null);
   
   // Mouse tracking logic for the avatar container
   const containerRef = useRef<HTMLDivElement>(null);
@@ -80,10 +80,10 @@ export default function LoginPage() {
       setIsLoading(false);
       
       // Trigger the wrong password animation
-      // if (avatarRef.current) {
-      //   avatarRef.current.play('wrong_password'); // or whatever the red animation key is
-      //   avatarRef.current.setExpression('sad');
-      // }
+      if (avatarRef.current) {
+        avatarRef.current.play('angry'); // Using 'angry' from JSON
+        avatarRef.current.setExpression('angry-brows');
+      }
     }
  else {
       router.push("/dashboard");
@@ -130,11 +130,7 @@ export default function LoginPage() {
         
         <div className="flex items-center justify-center mb-8">
           <div ref={containerRef} className="relative w-24 h-24 mb-4 transition-transform duration-75 ease-out flex items-center justify-center bg-white/5 rounded-full border border-white/10 shadow-2xl">
-            {/* 
-              Uncomment when avatar.avatar.json is available:
-              <StrobiAvatar ref={avatarRef} defaultAnimation="neutral" size={96} className="w-full h-full" />
-            */}
-            <span className="text-[10px] text-white/30 text-center px-2">Waiting for avatar.json</span>
+            <StrobiAvatar ref={avatarRef} defaultAnimation="idle" size={96} className="w-full h-full" />
           </div>
         </div>
         
