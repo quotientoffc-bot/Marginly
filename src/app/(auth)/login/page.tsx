@@ -33,6 +33,7 @@ export default function LoginPage() {
 
   // Avatar Controller Ref
   const avatarRef = useRef<AvatarController>(null);
+  const currentExpressionRef = useRef<string>('idle');
   
   // Mouse tracking logic for the avatar container
   const containerRef = useRef<HTMLDivElement>(null);
@@ -50,8 +51,8 @@ export default function LoginPage() {
       const deltaX = clientX - centerX;
       const deltaY = clientY - centerY;
       
-      const rotateX = Math.max(-25, Math.min(25, -(deltaY / 15)));
-      const rotateY = Math.max(-25, Math.min(25, (deltaX / 15)));
+      const rotateX = Math.max(-20, Math.min(20, -(deltaY / 20)));
+      const rotateY = Math.max(-20, Math.min(20, (deltaX / 20)));
       
       const translateX = Math.max(-10, Math.min(10, deltaX / 30));
       const translateY = Math.max(-10, Math.min(10, deltaY / 30));
@@ -61,34 +62,38 @@ export default function LoginPage() {
       // True Live Eye/Head Tracking Logic
       if (avatarRef.current) {
         const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-        if (distance < 80) {
-          // Mouse is close to center, return to default
-          avatarRef.current.play('idle');
-        } else {
-          // Calculate angle (-180 to 180 degrees)
+        let targetExpression = 'idle';
+        
+        if (distance >= 80) {
           const angle = Math.atan2(deltaY, deltaX) * (180 / Math.PI);
-          let expression = 'neutral';
           
           if (angle >= -22.5 && angle < 22.5) {
-            expression = 'far-right-glance'; // Right
+            targetExpression = 'far-right-glance';
           } else if (angle >= 22.5 && angle < 67.5) {
-            expression = 'asymmetric-down-right'; // Bottom-Right
+            targetExpression = 'asymmetric-down-right';
           } else if (angle >= 67.5 && angle < 112.5) {
-            expression = 'downward-gaze'; // Bottom
+            targetExpression = 'downward-gaze';
           } else if (angle >= 112.5 && angle < 157.5) {
-            expression = 'wide-down-left'; // Bottom-Left
+            targetExpression = 'wide-down-left';
           } else if (angle >= 157.5 || angle < -157.5) {
-            expression = 'attentive-left'; // Left
+            targetExpression = 'attentive-left';
           } else if (angle >= -157.5 && angle < -112.5) {
-            expression = 'asymmetric-up-left'; // Top-Left
+            targetExpression = 'asymmetric-up-left';
           } else if (angle >= -112.5 && angle < -67.5) {
-            expression = 'upward-side-glance'; // Top
+            targetExpression = 'upward-side-glance';
           } else if (angle >= -67.5 && angle < -22.5) {
-            expression = 'upward-side-glance'; // Top-Right (reusing as there's no perfect match)
+            targetExpression = 'upward-side-glance';
           }
-          
-          // Cast to any to avoid strict type errors for the ExpressionKey
-          avatarRef.current.setExpression(expression as any);
+        }
+        
+        // ONLY update the API if the expression actually changed
+        if (currentExpressionRef.current !== targetExpression) {
+          currentExpressionRef.current = targetExpression;
+          if (targetExpression === 'idle') {
+            avatarRef.current.play('idle');
+          } else {
+            avatarRef.current.setExpression(targetExpression as any);
+          }
         }
       }
     };
@@ -173,7 +178,7 @@ export default function LoginPage() {
       <div className="glass-panel p-10 squircle-lg w-full max-w-md relative z-10 border border-white/10 shadow-2xl">
         
         <div className="flex items-center justify-center mb-8">
-          <div ref={containerRef} className="relative w-56 h-56 mb-4 flex items-center justify-center bg-white/5 rounded-full border border-white/10 shadow-2xl" style={{ transformStyle: 'preserve-3d', willChange: 'transform' }}>
+          <div ref={containerRef} className="relative w-56 h-56 mb-4 flex items-center justify-center bg-white/5 rounded-full border border-white/10 shadow-2xl transition-transform duration-500 ease-out" style={{ transformStyle: 'preserve-3d', willChange: 'transform' }}>
             <StrobiAvatar ref={avatarRef} defaultAnimation="idle" size={224} className="w-full h-full" />
           </div>
         </div>
