@@ -35,6 +35,10 @@ export default function LoginPage() {
   const avatarRef = useRef<AvatarController>(null);
   const currentExpressionRef = useRef<string>('idle');
   
+  // Lock tracking during error animations
+  const trackingLockRef = useRef<boolean>(false);
+  const lockTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  
   // Mouse tracking logic for the avatar container
   const containerRef = useRef<HTMLDivElement>(null);
   const trackingRef = useRef<HTMLDivElement>(null);
@@ -61,7 +65,7 @@ export default function LoginPage() {
       containerRef.current.style.transform = `perspective(1000px) translate3d(${translateX}px, ${translateY}px, 20px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
       
       // True Live Eye/Head Tracking Logic
-      if (avatarRef.current) {
+      if (avatarRef.current && !trackingLockRef.current) {
         const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
         let targetExpression = 'idle';
         
@@ -131,8 +135,18 @@ export default function LoginPage() {
       
       // Trigger the wrong password animation
       if (avatarRef.current) {
-        avatarRef.current.play('angry'); // Using 'angry' from JSON
+        trackingLockRef.current = true;
+        
+        // Stop any idle animations and force the red shake expression
+        avatarRef.current.stop();
         avatarRef.current.setExpression('angry-brows');
+        currentExpressionRef.current = 'angry-brows';
+        
+        // Release the lock after 2.5 seconds to resume tracking
+        if (lockTimeoutRef.current) clearTimeout(lockTimeoutRef.current);
+        lockTimeoutRef.current = setTimeout(() => {
+          trackingLockRef.current = false;
+        }, 2500);
       }
     }
  else {
