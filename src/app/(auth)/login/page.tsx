@@ -37,6 +37,7 @@ export default function LoginPage() {
   
   // Mouse tracking logic for the avatar container
   const containerRef = useRef<HTMLDivElement>(null);
+  const trackingRef = useRef<HTMLDivElement>(null);
   
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -178,8 +179,12 @@ export default function LoginPage() {
       <div className="glass-panel p-10 squircle-lg w-full max-w-md relative z-10 border border-white/10 shadow-2xl">
         
         <div className="flex items-center justify-center mb-8">
-          <div ref={containerRef} className="relative w-56 h-56 mb-4 flex items-center justify-center bg-white/5 rounded-full border border-white/10 shadow-2xl transition-transform duration-500 ease-out" style={{ transformStyle: 'preserve-3d', willChange: 'transform' }}>
-            <StrobiAvatar ref={avatarRef} defaultAnimation="idle" size={224} className="w-full h-full" />
+          {/* Static background circle */}
+          <div ref={trackingRef} className="relative w-56 h-56 mb-4 flex items-center justify-center bg-white/5 rounded-full border border-white/10 shadow-2xl">
+            {/* Moving avatar container */}
+            <div ref={containerRef} className="absolute inset-0 transition-transform duration-200 ease-out" style={{ transformStyle: 'preserve-3d', willChange: 'transform' }}>
+              <StrobiAvatar ref={avatarRef} defaultAnimation="idle" size={224} className="w-full h-full" />
+            </div>
           </div>
         </div>
         
