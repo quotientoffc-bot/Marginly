@@ -402,10 +402,10 @@ export const GlassDock = React.forwardRef<HTMLDivElement, GlassDockProps>(
                                         'bg-black text-white dark:bg-white dark:text-black',
                                         'shadow-md flex items-center justify-center',
                                         'border border-neutral-700 dark:border-neutral-300',
-                                        'w-max min-w-[100px] '
+                                        'w-max min-w-[100px] overflow-hidden'
                                     )}
                                 >
-                                    <div className="relative h-6 flex items-center justify-center overflow-hidden w-full">
+                                    <div className="relative h-6 flex items-center justify-center w-max">
                                         <AnimatePresence mode="popLayout" custom={direction}>
                                             <motion.span
                                                 key={items[hoveredIndex].title}

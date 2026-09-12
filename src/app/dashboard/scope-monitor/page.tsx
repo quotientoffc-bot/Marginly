@@ -1,6 +1,7 @@
 import { ShieldAlert, Sparkles, CheckCircle2 } from "lucide-react";
 import { supabaseAdmin } from "@/lib/supabase";
 import GenerateButton from "@/components/ui/generate-button";
+import DraftOrderButton from "@/components/ui/draft-order-button";
 
 export default async function ScopeMonitorPage() {
   const { data: creeps } = await supabaseAdmin
@@ -56,11 +57,7 @@ export default async function ScopeMonitorPage() {
 
               <div className="flex gap-4 relative z-10 items-center">
                 <div className="flex-1">
-                  <GenerateButton 
-                    defaultText="Draft Change Order" 
-                    generatingText="Drafting..." 
-                    className="w-full h-12 rounded-xl"
-                  />
+                  <DraftOrderButton defaultText="Draft Change Order" />
                 </div>
                 <button className="flex-1 bg-black text-white/70 font-medium py-3 rounded-xl border border-white/10 hover:text-white transition-colors h-12">
                   Dismiss Warning
@@ -76,11 +73,7 @@ export default async function ScopeMonitorPage() {
               <p className="text-white/40 max-w-sm mb-8">No active scope creep detected. Your AI monitor is constantly analyzing incoming requests.</p>
               
               <div className="w-64">
-                <GenerateButton 
-                  defaultText="Draft Manual Change Order" 
-                  generatingText="Drafting..." 
-                  className="w-full h-12 rounded-xl"
-                />
+                <DraftOrderButton defaultText="Draft Manual Change Order" />
               </div>
             </div>
           )}
