@@ -26,6 +26,7 @@ export default function IntegrationsPage() {
   const [selected, setSelected] = useState<any>(null);
   const [connecting, setConnecting] = useState(false);
   const [connected, setConnected] = useState<string[]>([]);
+  const [apiKey, setApiKey] = useState("");
 
   const handleConnect = () => {
     setConnecting(true);
@@ -34,7 +35,10 @@ export default function IntegrationsPage() {
       if (selected) {
         setConnected(prev => [...prev, selected.id]);
       }
-      setTimeout(() => setSelected(null), 1000);
+      setTimeout(() => {
+        setSelected(null);
+        setApiKey("");
+      }, 1000);
     }, 1500);
   };
 
@@ -140,7 +144,7 @@ export default function IntegrationsPage() {
               className="w-full max-w-md bg-neutral-900 border border-white/10 rounded-3xl overflow-hidden shadow-2xl relative"
             >
               <button 
-                onClick={() => setSelected(null)}
+                onClick={() => { setSelected(null); setApiKey(""); }}
                 className="absolute top-4 right-4 text-white/40 hover:text-white"
               >
                 <X className="w-5 h-5" />
@@ -160,7 +164,20 @@ export default function IntegrationsPage() {
                 </div>
                 
                 <h3 className="text-2xl font-medium text-white mb-2">Connect {selected.name}</h3>
-                <p className="text-white/50 text-sm mb-8">{selected.desc}</p>
+                <p className="text-white/50 text-sm mb-6">{selected.desc}</p>
+                
+                {selected.id === 'custom-ai' && !connected.includes(selected.id) && (
+                  <div className="w-full text-left mb-6">
+                    <label className="text-xs font-semibold text-white/50 uppercase tracking-widest ml-1 mb-2 block">API Key (OpenAI / Anthropic)</label>
+                    <input 
+                      type="password"
+                      value={apiKey}
+                      onChange={(e) => setApiKey(e.target.value)}
+                      placeholder="sk-..."
+                      className="w-full bg-white/5 border border-white/10 rounded-xl py-3 px-4 text-white placeholder:text-white/20 focus:outline-none focus:ring-2 focus:ring-purple-500/50"
+                    />
+                  </div>
+                )}
               </div>
 
               <div className="bg-black/20 p-6 border-t border-white/5">
@@ -172,16 +189,18 @@ export default function IntegrationsPage() {
                 ) : (
                   <button 
                     onClick={handleConnect}
-                    disabled={connecting}
-                    className="w-full py-3.5 bg-white text-black font-semibold rounded-xl hover:bg-white/90 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2 disabled:opacity-70 disabled:hover:scale-100"
+                    disabled={connecting || (selected.id === 'custom-ai' && !apiKey.trim())}
+                    className="w-full py-3.5 bg-white text-black font-semibold rounded-xl hover:bg-white/90 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
                   >
                     {connecting ? (
                       <>
                         <Loader2 className="w-5 h-5 animate-spin" />
                         Authenticating...
                       </>
+                    ) : selected.id === 'custom-ai' ? (
+                      'Save API Key'
                     ) : (
-                      `Connect to ${selected.name}`
+                      `Sign in with ${selected.name}`
                     )}
                   </button>
                 )}
