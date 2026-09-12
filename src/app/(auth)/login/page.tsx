@@ -44,14 +44,6 @@ export default function LoginPage() {
   const trackingRef = useRef<HTMLDivElement>(null);
   
   useEffect(() => {
-    const checkUser = async () => {
-      const { data } = await supabase.auth.getUser();
-      if (data?.user) {
-        router.push('/dashboard');
-      }
-    };
-    checkUser();
-
     const handleMouseMove = (e: MouseEvent) => {
     const handleMouseMove = (e: MouseEvent) => {
       if (!containerRef.current) return;
@@ -159,7 +151,7 @@ export default function LoginPage() {
       }
     }
  else {
-      router.push("/dashboard");
+      window.location.href = "/dashboard";
     }
   };
 

@@ -22,15 +22,7 @@ type SignupFormValues = z.infer<typeof signupSchema>;
 
 export default function SignupPage() {
   const router = useRouter();
-  useEffect(() => {
-    const checkUser = async () => {
-      const { data } = await supabase.auth.getUser();
-      if (data?.user) {
-        router.push('/dashboard');
-      }
-    };
-    checkUser();
-  }, [router]);
+
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
@@ -69,7 +61,7 @@ export default function SignupPage() {
         setSuccess(true);
         setIsLoading(false);
       } else {
-        router.push("/dashboard");
+        window.location.href = "/dashboard";
       }
     }
   };
