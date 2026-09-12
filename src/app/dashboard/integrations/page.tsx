@@ -186,7 +186,7 @@ export default function IntegrationsPage() {
                 <h3 className="text-2xl font-medium text-white mb-2">Connect {selected.name}</h3>
                 <p className="text-white/50 text-sm mb-6">{selected.desc}</p>
                 
-                {!connected.includes(selected.id) && (
+                {!connected.includes(selected.id) && !['gmail', 'calendar', 'drive', 'docs'].includes(selected.id) && (
                   <div className="w-full text-left mb-6">
                     <label className="text-xs font-semibold text-white/50 uppercase tracking-widest ml-1 mb-2 block">
                       {selected.id === 'custom-ai' && "API Key (OpenAI / Anthropic / Gemini)"}
@@ -233,7 +233,7 @@ export default function IntegrationsPage() {
                 ) : (
                   <button 
                     onClick={handleConnect}
-                    disabled={connecting || !apiKey.trim()}
+                    disabled={connecting || (!['gmail', 'calendar', 'drive', 'docs'].includes(selected.id) && !apiKey.trim())}
                     className="w-full py-3.5 bg-white text-black font-semibold rounded-xl hover:bg-white/90 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
                   >
                     {connecting ? (
@@ -241,6 +241,8 @@ export default function IntegrationsPage() {
                         <Loader2 className="w-5 h-5 animate-spin" />
                         Authenticating...
                       </>
+                    ) : ['gmail', 'calendar', 'drive', 'docs'].includes(selected.id) ? (
+                      `Sign in with Google`
                     ) : (
                       `Authenticate ${selected.name}`
                     )}
