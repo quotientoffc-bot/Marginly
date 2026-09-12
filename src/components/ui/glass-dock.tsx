@@ -395,13 +395,14 @@ export const GlassDock = React.forwardRef<HTMLDivElement, GlassDockProps>(
                                 transition={{ type: 'spring', stiffness: 120, damping: 18 }}
                                 className="absolute top-0 left-0 pointer-events-none z-30 flex justify-center items-center w-0"
                             >
-                                <div
+                                <motion.div
+                                    layout
                                     className={cn(
                                         'px-5 py-2 rounded-lg',
                                         'bg-black text-white dark:bg-white dark:text-black',
                                         'shadow-md flex items-center justify-center',
                                         'border border-neutral-700 dark:border-neutral-300',
-                                        'min-w-[100px] '
+                                        'w-max min-w-[100px] '
                                     )}
                                 >
                                     <div className="relative h-6 flex items-center justify-center overflow-hidden w-full">
@@ -434,7 +435,7 @@ export const GlassDock = React.forwardRef<HTMLDivElement, GlassDockProps>(
                                             </motion.span>
                                         </AnimatePresence>
                                     </div>
-                                </div>
+                                </motion.div>
                             </motion.div>
                         )}
                     </AnimatePresence>
