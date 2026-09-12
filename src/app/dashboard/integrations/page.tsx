@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { 
   MessageCircle, Mail, MessageSquare, GitBranch, Layout, Box, 
   Calendar, HardDrive, FileText, Video, BrainCircuit, Users,
@@ -27,6 +27,25 @@ export default function IntegrationsPage() {
   const [connecting, setConnecting] = useState(false);
   const [connected, setConnected] = useState<string[]>([]);
   const [apiKey, setApiKey] = useState("");
+  const [isClient, setIsClient] = useState(false);
+
+  // Load persisted connections on mount
+  useEffect(() => {
+    setIsClient(true);
+    const saved = localStorage.getItem("marginly_active_integrations");
+    if (saved) {
+      try {
+        setConnected(JSON.parse(saved));
+      } catch (e) {}
+    }
+  }, []);
+
+  // Save connections whenever they change
+  useEffect(() => {
+    if (isClient) {
+      localStorage.setItem("marginly_active_integrations", JSON.stringify(connected));
+    }
+  }, [connected, isClient]);
 
   const handleConnect = () => {
     setConnecting(true);
