@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Briefcase, Building, Key, Users, ArrowRight, Shield } from "lucide-react";
 import { createClient } from "@/lib/supabase-client";
+import { checkTeamPasswordUnique } from "@/app/actions";
 
 export default function OnboardingPage() {
   const router = useRouter();
@@ -25,6 +26,15 @@ export default function OnboardingPage() {
     try {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error("Authentication required.");
+
+      // 1. Verify password uniqueness first
+      const checkResult = await checkTeamPasswordUnique(teamPassword);
+      if (checkResult.error) {
+        throw new Error("Failed to verify invite code uniqueness.");
+      }
+      if (!checkResult.unique) {
+        throw new Error("This invite code is already taken by another workspace. Please choose a different, more secure code.");
+      }
 
       // Insert Team
       const { data: teamData, error: teamError } = await supabase

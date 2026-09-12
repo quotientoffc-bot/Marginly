@@ -1,6 +1,7 @@
 "use server";
 
 import { createServerClient } from '@supabase/ssr';
+import { createClient } from '@supabase/supabase-js';
 import { cookies } from 'next/headers';
 
 // Helper to get authenticated client
@@ -199,5 +200,31 @@ export async function fetchDashboardMetrics() {
   } catch (err: any) {
     console.error("Error fetching dashboard metrics:", err);
     return { totalRevenue: 0, activeProjects: 0, pendingQuotes: 0, scopeCreeps: [], error: err.message };
+  }
+}
+
+export async function checkTeamPasswordUnique(password: string) {
+  try {
+    const supabaseAdmin = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!
+    );
+    
+    const { data, error } = await supabaseAdmin
+      .from('teams')
+      .select('id')
+      .eq('team_password', password)
+      .limit(1);
+      
+    if (error) throw error;
+    
+    if (data && data.length > 0) {
+      return { unique: false };
+    }
+    
+    return { unique: true };
+  } catch (err: any) {
+    console.error("Error checking team password:", err);
+    return { error: err.message };
   }
 }
