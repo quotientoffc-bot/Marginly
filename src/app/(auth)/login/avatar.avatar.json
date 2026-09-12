@@ -233,7 +233,7 @@
     "surprised-left": {
       "head": {
         "x": 2.9468749999999986,
-        "y": -16.051171875,
+        "y": -35.3,
         "z": -20.916015625
       },
       "eyes": {
@@ -609,8 +609,8 @@
     },
     "asymmetric-up-left": {
       "head": {
-        "x": 6.585546875,
-        "y": 4.737109375000001,
+        "x": 15.0,
+        "y": -25.0,
         "z": 12.840234374999998
       },
       "eyes": {
@@ -667,8 +667,8 @@
     },
     "wide-down-left": {
       "head": {
-        "x": -17.127734375000003,
-        "y": 18.070703124999998,
+        "x": -20.0,
+        "y": -25.0,
         "z": 13.891796875
       },
       "eyes": {
@@ -938,7 +938,7 @@
       },
       "metadata": {
         "label": "sleeping",
-        "description": "Yeux presque fermés, respiration lente et expression de sommeil.",
+        "description": "Yeux presque ferm\u00e9s, respiration lente et expression de sommeil.",
         "group": "Cycle de vie"
       }
     },
@@ -961,7 +961,7 @@
       },
       "metadata": {
         "label": "waking",
-        "description": "Séquence courte de réveil avant retour vers une expression neutre.",
+        "description": "S\u00e9quence courte de r\u00e9veil avant retour vers une expression neutre.",
         "group": "Cycle de vie"
       }
     },
@@ -1072,7 +1072,7 @@
       },
       "metadata": {
         "label": "thinking",
-        "description": "Regard haut et latéral, expressions asymétriques et changements fréquents.",
+        "description": "Regard haut et lat\u00e9ral, expressions asym\u00e9triques et changements fr\u00e9quents.",
         "group": "Cycle de vie"
       }
     },
@@ -1125,7 +1125,7 @@
       },
       "metadata": {
         "label": "searching",
-        "description": "Balayage rapide et changements très fréquents.",
+        "description": "Balayage rapide et changements tr\u00e8s fr\u00e9quents.",
         "group": "Cycle de vie"
       }
     },
@@ -1166,7 +1166,7 @@
       },
       "metadata": {
         "label": "working",
-        "description": "Rythme régulier et expressions concentrées.",
+        "description": "Rythme r\u00e9gulier et expressions concentr\u00e9es.",
         "group": "Cycle de vie"
       }
     },
@@ -1214,7 +1214,7 @@
       "metadata": {
         "label": "excited",
         "description": "Grandes expressions et transitions rapides.",
-        "group": "Réactions"
+        "group": "R\u00e9actions"
       }
     },
     "bored": {
@@ -1248,8 +1248,8 @@
       },
       "metadata": {
         "label": "bored",
-        "description": "Cet état enchaîne un pool de presets et des clignements.",
-        "group": "Réactions"
+        "description": "Cet \u00e9tat encha\u00eene un pool de presets et des clignements.",
+        "group": "R\u00e9actions"
       }
     },
     "suspicious": {
@@ -1283,8 +1283,8 @@
       },
       "metadata": {
         "label": "suspicious",
-        "description": "Cet état enchaîne un pool de presets et des clignements.",
-        "group": "Réactions"
+        "description": "Cet \u00e9tat encha\u00eene un pool de presets et des clignements.",
+        "group": "R\u00e9actions"
       }
     },
     "angry": {
@@ -1312,8 +1312,8 @@
       },
       "metadata": {
         "label": "angry",
-        "description": "Cet état enchaîne un pool de presets et des clignements.",
-        "group": "Réactions"
+        "description": "Cet \u00e9tat encha\u00eene un pool de presets et des clignements.",
+        "group": "R\u00e9actions"
       }
     },
     "drowsy": {
@@ -1347,8 +1347,8 @@
       },
       "metadata": {
         "label": "drowsy",
-        "description": "Cet état enchaîne un pool de presets et des clignements.",
-        "group": "Réactions"
+        "description": "Cet \u00e9tat encha\u00eene un pool de presets et des clignements.",
+        "group": "R\u00e9actions"
       }
     },
     "happy": {
@@ -1388,8 +1388,8 @@
       },
       "metadata": {
         "label": "happy",
-        "description": "Cet état enchaîne un pool de presets et des clignements.",
-        "group": "Réactions"
+        "description": "Cet \u00e9tat encha\u00eene un pool de presets et des clignements.",
+        "group": "R\u00e9actions"
       }
     },
     "curious": {
@@ -1429,8 +1429,8 @@
       },
       "metadata": {
         "label": "curious",
-        "description": "Inclinaisons et forte asymétrie.",
-        "group": "Réactions"
+        "description": "Inclinaisons et forte asym\u00e9trie.",
+        "group": "R\u00e9actions"
       }
     },
     "confused": {
@@ -1464,8 +1464,8 @@
       },
       "metadata": {
         "label": "confused",
-        "description": "Cet état enchaîne un pool de presets et des clignements.",
-        "group": "Réactions"
+        "description": "Cet \u00e9tat encha\u00eene un pool de presets et des clignements.",
+        "group": "R\u00e9actions"
       }
     },
     "surprised": {
@@ -1493,8 +1493,8 @@
       },
       "metadata": {
         "label": "surprised",
-        "description": "Cet état enchaîne un pool de presets et des clignements.",
-        "group": "Réactions"
+        "description": "Cet \u00e9tat encha\u00eene un pool de presets et des clignements.",
+        "group": "R\u00e9actions"
       }
     },
     "proud": {
@@ -1528,8 +1528,8 @@
       },
       "metadata": {
         "label": "proud",
-        "description": "Cet état enchaîne un pool de presets et des clignements.",
-        "group": "Réactions"
+        "description": "Cet \u00e9tat encha\u00eene un pool de presets et des clignements.",
+        "group": "R\u00e9actions"
       }
     },
     "shy": {
@@ -1563,8 +1563,8 @@
       },
       "metadata": {
         "label": "shy",
-        "description": "Cet état enchaîne un pool de presets et des clignements.",
-        "group": "Réactions"
+        "description": "Cet \u00e9tat encha\u00eene un pool de presets et des clignements.",
+        "group": "R\u00e9actions"
       }
     },
     "sad": {
@@ -1598,8 +1598,8 @@
       },
       "metadata": {
         "label": "sad",
-        "description": "Cet état enchaîne un pool de presets et des clignements.",
-        "group": "Réactions"
+        "description": "Cet \u00e9tat encha\u00eene un pool de presets et des clignements.",
+        "group": "R\u00e9actions"
       }
     },
     "laughing": {
@@ -1633,8 +1633,8 @@
       },
       "metadata": {
         "label": "laughing",
-        "description": "Cet état enchaîne un pool de presets et des clignements.",
-        "group": "Réactions"
+        "description": "Cet \u00e9tat encha\u00eene un pool de presets et des clignements.",
+        "group": "R\u00e9actions"
       }
     },
     "scared": {
@@ -1662,8 +1662,8 @@
       },
       "metadata": {
         "label": "scared",
-        "description": "Cet état enchaîne un pool de presets et des clignements.",
-        "group": "Réactions"
+        "description": "Cet \u00e9tat encha\u00eene un pool de presets et des clignements.",
+        "group": "R\u00e9actions"
       }
     },
     "playful": {
@@ -1703,8 +1703,8 @@
       },
       "metadata": {
         "label": "playful",
-        "description": "Cet état enchaîne un pool de presets et des clignements.",
-        "group": "Réactions"
+        "description": "Cet \u00e9tat encha\u00eene un pool de presets et des clignements.",
+        "group": "R\u00e9actions"
       }
     },
     "celebrate": {
@@ -1738,8 +1738,8 @@
       },
       "metadata": {
         "label": "celebrate",
-        "description": "Cet état enchaîne un pool de presets et des clignements.",
-        "group": "Réactions"
+        "description": "Cet \u00e9tat encha\u00eene un pool de presets et des clignements.",
+        "group": "R\u00e9actions"
       }
     }
   },
