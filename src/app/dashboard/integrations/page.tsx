@@ -63,7 +63,7 @@ export default function IntegrationsPage() {
   };
 
   return (
-    <div className="max-w-6xl mx-auto flex flex-col h-full animate-in fade-in slide-in-from-bottom-4 duration-700">
+    <div className="max-w-6xl mx-auto flex flex-col min-h-full animate-in fade-in slide-in-from-bottom-4 duration-700">
       <div className="flex justify-between items-start mb-16 px-4">
         <div>
           <h1 className="text-3xl font-medium tracking-tight text-white mb-2">Integrations</h1>

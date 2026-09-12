@@ -11,7 +11,7 @@ export default async function ScopeMonitorPage() {
   const activeCreep = creeps && creeps.length > 0 ? creeps[0] : null;
 
   return (
-    <div className="max-w-6xl mx-auto flex flex-col h-full animate-in fade-in slide-in-from-bottom-4 duration-700">
+    <div className="max-w-6xl mx-auto flex flex-col min-h-full animate-in fade-in slide-in-from-bottom-4 duration-700">
       <div className="mb-8">
         <h1 className="text-3xl font-medium tracking-tight text-white mb-2">Scope Monitor</h1>
         <p className="text-white/50">AI-powered detection of unpaid work and out-of-bounds requests.</p>

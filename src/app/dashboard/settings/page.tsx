@@ -93,7 +93,7 @@ export default function SettingsPage() {
 
   if (role === "client") {
     return (
-      <div className="max-w-4xl mx-auto h-full flex flex-col pt-12 animate-in fade-in slide-in-from-bottom-4 duration-700 pb-32">
+      <div className="max-w-4xl mx-auto min-h-full flex flex-col pt-12 animate-in fade-in slide-in-from-bottom-4 duration-700 pb-32">
         
         <div className="mb-12 px-6">
           <h1 className="text-4xl font-medium tracking-tight text-white mb-3">

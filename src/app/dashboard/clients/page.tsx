@@ -44,7 +44,7 @@ export default function ClientsPage() {
   // CLIENT VIEW (The Agency User viewing their own clients)
   if (role === "client") {
     return (
-      <div className="max-w-6xl mx-auto flex flex-col h-full animate-in fade-in slide-in-from-bottom-4 duration-700">
+      <div className="max-w-6xl mx-auto flex flex-col min-h-full animate-in fade-in slide-in-from-bottom-4 duration-700">
         <div className="flex justify-between items-start mb-8">
           <div>
             <h1 className="text-3xl font-medium tracking-tight text-white mb-2">My Clients</h1>
@@ -83,7 +83,7 @@ export default function ClientsPage() {
 
   // MANAGER VIEW (Mohammed Sir viewing the platform telemetry)
   return (
-    <div className="max-w-6xl mx-auto flex flex-col h-full animate-in fade-in slide-in-from-bottom-4 duration-700">
+    <div className="max-w-6xl mx-auto flex flex-col min-h-full animate-in fade-in slide-in-from-bottom-4 duration-700">
       <div className="mb-8">
         <h1 className="text-3xl font-medium tracking-tight text-white mb-2">Clientele Analytics</h1>
         <p className="text-white/50">Track how your customers are utilizing the Marginly platform.</p>

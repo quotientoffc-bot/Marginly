@@ -34,7 +34,7 @@ export default function LogsPage() {
   }
 
   return (
-    <div className="max-w-6xl mx-auto h-full flex flex-col pt-8 animate-in fade-in slide-in-from-bottom-4 duration-700 pb-32">
+    <div className="max-w-6xl mx-auto min-h-full flex flex-col pt-8 animate-in fade-in slide-in-from-bottom-4 duration-700 pb-32">
       <div className="mb-10 px-4">
         <h1 className="text-4xl font-medium tracking-tight text-white mb-3">System Logs</h1>
         <p className="text-white/50 text-lg">Live security events, database activity, and system telemetry.</p>
