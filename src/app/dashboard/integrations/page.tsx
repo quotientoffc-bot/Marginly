@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
 import { 
   MessageCircle, Mail, MessageSquare, GitBranch, Layout, Box, 
   Calendar, HardDrive, FileText, Video, BrainCircuit, Users, Book,
@@ -9,6 +10,7 @@ import {
 import RadialGlowButton from "@/components/ui/radial-glow-button";
 import { motion, AnimatePresence } from "framer-motion";
 import { saveIntegrationToken } from "@/app/actions/ai";
+import { createClient } from "@/lib/supabase-client";
 
 const INTEGRATIONS = [
   { id: 'custom-ai', icon: BrainCircuit, color: "text-purple-400", name: "Custom AI Model", desc: "OPENAI / ANTHROPIC / GEMINI. Bring your own API key." },
@@ -24,23 +26,40 @@ const INTEGRATIONS = [
   { id: 'notion', icon: Book, color: "text-neutral-200", name: "Notion", desc: "Sync project specifications and documentation." },
 ];
 
-export default function IntegrationsPage() {
+function IntegrationsContent() {
   const [selected, setSelected] = useState<any>(null);
   const [connecting, setConnecting] = useState(false);
   const [connected, setConnected] = useState<string[]>([]);
   const [apiKey, setApiKey] = useState("");
   const [isClient, setIsClient] = useState(false);
+  const searchParams = useSearchParams();
+  const router = useRouter();
 
   // Load persisted connections on mount
   useEffect(() => {
     setIsClient(true);
+    let initialConnected: string[] = [];
+    
     const saved = localStorage.getItem("marginly_active_integrations");
     if (saved) {
       try {
-        setConnected(JSON.parse(saved));
+        initialConnected = JSON.parse(saved);
+        setConnected(initialConnected);
       } catch (e) {}
     }
-  }, []);
+
+    // Check if we just returned from a successful OAuth flow
+    const connectedParam = searchParams.get('connected');
+    if (connectedParam && !initialConnected.includes(connectedParam)) {
+      setConnected(prev => {
+        const updated = [...prev, connectedParam];
+        localStorage.setItem("marginly_active_integrations", JSON.stringify(updated));
+        return updated;
+      });
+      // Clean up the URL
+      router.replace('/dashboard/integrations');
+    }
+  }, [searchParams, router]);
 
   // Save connections whenever they change
   useEffect(() => {
@@ -51,8 +70,42 @@ export default function IntegrationsPage() {
 
   const handleConnect = async () => {
     setConnecting(true);
+    
+    // Execute real Google OAuth redirect for Google services
+    if (selected && ['gmail', 'calendar', 'drive', 'docs'].includes(selected.id)) {
+      try {
+        const supabase = createClient();
+        
+        // Define specific scopes based on the integration
+        let scopes = 'email profile';
+        if (selected.id === 'gmail') scopes += ' https://www.googleapis.com/auth/gmail.readonly';
+        if (selected.id === 'calendar') scopes += ' https://www.googleapis.com/auth/calendar.readonly';
+        if (selected.id === 'drive' || selected.id === 'docs') scopes += ' https://www.googleapis.com/auth/drive.readonly';
+        
+        const { data, error } = await supabase.auth.signInWithOAuth({
+          provider: 'google',
+          options: {
+            scopes: scopes,
+            redirectTo: `${window.location.origin}/auth/callback?next=/dashboard/integrations?connected=${selected.id}`,
+            queryParams: {
+              access_type: 'offline',
+              prompt: 'consent',
+            }
+          }
+        });
+        
+        if (error) throw error;
+        // The browser will redirect to Google, so we don't need to do anything else here.
+        return;
+      } catch (error) {
+        alert(error instanceof Error ? error.message : "Failed to initialize Google OAuth");
+        setConnecting(false);
+        return;
+      }
+    }
+
     try {
-      if (selected && !['gmail', 'calendar', 'drive', 'docs'].includes(selected.id)) {
+      if (selected) {
         await saveIntegrationToken(selected.id, apiKey);
       }
       setConnected(prev => [...prev, selected.id]);
@@ -259,5 +312,13 @@ export default function IntegrationsPage() {
         )}
       </AnimatePresence>
     </div>
+  );
+}
+
+export default function IntegrationsPage() {
+  return (
+    <Suspense fallback={<div className="flex h-full items-center justify-center text-white/50">Loading integrations...</div>}>
+      <IntegrationsContent />
+    </Suspense>
   );
 }
