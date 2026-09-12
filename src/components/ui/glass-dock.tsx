@@ -404,7 +404,7 @@ export const GlassDock = React.forwardRef<HTMLDivElement, GlassDockProps>(
                                         'min-w-[100px] '
                                     )}
                                 >
-                                    <div className="relative h-4 flex items-center justify-center overflow-hidden w-full">
+                                    <div className="relative h-6 flex items-center justify-center overflow-hidden w-full">
                                         <AnimatePresence mode="popLayout" custom={direction}>
                                             <motion.span
                                                 key={items[hoveredIndex].title}
