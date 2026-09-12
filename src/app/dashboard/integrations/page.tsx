@@ -106,7 +106,12 @@ function IntegrationsContent() {
 
     try {
       if (selected) {
-        await saveIntegrationToken(selected.id, apiKey);
+        const result = await saveIntegrationToken(selected.id, apiKey);
+        if (result && result.error) {
+          alert(result.error);
+          setConnecting(false);
+          return;
+        }
       }
       setConnected(prev => [...prev, selected.id]);
       setTimeout(() => {
@@ -114,7 +119,7 @@ function IntegrationsContent() {
         setApiKey("");
       }, 1000);
     } catch (error) {
-      alert(error instanceof Error ? error.message : "Failed to save integration");
+      alert("Failed to save integration");
     } finally {
       setConnecting(false);
     }
