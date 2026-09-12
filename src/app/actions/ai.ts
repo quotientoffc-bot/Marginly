@@ -28,20 +28,14 @@ export async function saveIntegrationToken(providerId: string, token: string) {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) return { error: "Unauthorized" };
 
-    const teamMember = await prisma.team_members.findFirst({
-      where: { user_id: user.id, role: "owner" },
-    });
+    const profile = await prisma.profiles.findUnique({ where: { id: user.id } });
+    if (!profile) return { error: "User profile not found." };
 
-    if (!teamMember) return { error: "You must be a team owner to save integrations." };
-
-    const team = await prisma.teams.findUnique({ where: { id: teamMember.team_id } });
-    if (!team) return { error: "Team not found." };
-
-    const integrations = (team.integrations as Record<string, any>) || {};
+    const integrations = (profile.integrations as Record<string, any>) || {};
     integrations[providerId] = token;
 
-    await prisma.teams.update({
-      where: { id: team.id },
+    await prisma.profiles.update({
+      where: { id: user.id },
       data: { integrations },
     });
 
@@ -62,14 +56,11 @@ export async function analyzeScopeCreep(messageId: string, projectId: string) {
   const project = await prisma.projects.findUnique({ where: { id: projectId } });
   if (!message || !project) throw new Error("Message or project not found");
 
-  // Fetch team integrations
-  const teamMember = await prisma.team_members.findFirst({
-    where: { user_id: user.id },
-  });
-  if (!teamMember) throw new Error("Not part of a team");
+  // Fetch user integrations
+  const profile = await prisma.profiles.findUnique({ where: { id: user.id } });
+  if (!profile) throw new Error("User profile not found");
   
-  const team = await prisma.teams.findUnique({ where: { id: teamMember.team_id } });
-  const integrations = (team?.integrations as Record<string, any>) || {};
+  const integrations = (profile.integrations as Record<string, any>) || {};
   
   const apiKey = integrations['custom-ai'];
   if (!apiKey) {
