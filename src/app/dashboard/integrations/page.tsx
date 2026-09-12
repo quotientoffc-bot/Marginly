@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import RadialGlowButton from "@/components/ui/radial-glow-button";
 import { motion, AnimatePresence } from "framer-motion";
+import { saveIntegrationToken } from "@/app/actions/ai";
 
 const INTEGRATIONS = [
   { id: 'custom-ai', icon: BrainCircuit, color: "text-purple-400", name: "Custom AI Model", desc: "OPENAI / ANTHROPIC / GEMINI. Bring your own API key." },
@@ -48,18 +49,22 @@ export default function IntegrationsPage() {
     }
   }, [connected, isClient]);
 
-  const handleConnect = () => {
+  const handleConnect = async () => {
     setConnecting(true);
-    setTimeout(() => {
-      setConnecting(false);
-      if (selected) {
-        setConnected(prev => [...prev, selected.id]);
+    try {
+      if (selected && !['gmail', 'calendar', 'drive', 'docs'].includes(selected.id)) {
+        await saveIntegrationToken(selected.id, apiKey);
       }
+      setConnected(prev => [...prev, selected.id]);
       setTimeout(() => {
         setSelected(null);
         setApiKey("");
       }, 1000);
-    }, 1500);
+    } catch (error) {
+      alert(error instanceof Error ? error.message : "Failed to save integration");
+    } finally {
+      setConnecting(false);
+    }
   };
 
   const getStatus = (id: string) => connected.includes(id) ? "Connected" : "Connect";
