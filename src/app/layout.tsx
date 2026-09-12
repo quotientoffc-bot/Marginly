@@ -18,6 +18,9 @@ const jbMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "Marginly | Premium Scope & Quote Management",
   description: "AI-powered quoting, client-request, and scope monitor.",
+  icons: {
+    icon: "/logo.jpg",
+  }
 };
 
 export default function RootLayout({
