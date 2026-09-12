@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { 
   MessageCircle, Mail, MessageSquare, GitBranch, Layout, Box, 
-  Calendar, HardDrive, FileText, Video, BrainCircuit, Users,
+  Calendar, HardDrive, FileText, Video, BrainCircuit, Users, Book,
   Terminal, Server, FileDigit, Smartphone, X, CheckCircle2, Loader2
 } from "lucide-react";
 import RadialGlowButton from "@/components/ui/radial-glow-button";
@@ -20,6 +20,7 @@ const INTEGRATIONS = [
   { id: 'calendar', icon: Calendar, color: "text-blue-400", name: "Google Calendar", desc: "Schedule meetings and sync milestone deadlines." },
   { id: 'drive', icon: HardDrive, color: "text-yellow-400", name: "Google Drive", desc: "Attach files and documentation to change orders." },
   { id: 'docs', icon: FileText, color: "text-blue-300", name: "Google Docs", desc: "Generate and sync change order PDFs." },
+  { id: 'notion', icon: Book, color: "text-neutral-200", name: "Notion", desc: "Sync project specifications and documentation." },
 ];
 
 export default function IntegrationsPage() {
@@ -108,7 +109,7 @@ export default function IntegrationsPage() {
           {renderTile(INTEGRATIONS[0], "aspect-square flex items-center justify-center")}
           {renderTile(INTEGRATIONS[1], "aspect-square flex items-center justify-center")}
           {renderTile(INTEGRATIONS[2], "aspect-square flex items-center justify-center")}
-          {renderTile(INTEGRATIONS[3], "aspect-square flex items-center justify-center")}
+          {renderTile(INTEGRATIONS[10], "aspect-square flex items-center justify-center")}
           {renderTile(INTEGRATIONS[4], "aspect-square flex items-center justify-center")}
           {renderTile(INTEGRATIONS[5], "aspect-square flex items-center justify-center")}
           {renderTile(INTEGRATIONS[6], "aspect-[1/1.5] row-span-2 flex flex-col items-center justify-center", (
@@ -193,6 +194,7 @@ export default function IntegrationsPage() {
                       {selected.id === 'slack' && "Slack Bot Token (xoxb-...)"}
                       {selected.id === 'zoom' && "Zoom Server-to-Server OAuth Token"}
                       {selected.id === 'github' && "GitHub Personal Access Token (classic)"}
+                      {selected.id === 'notion' && "Notion Internal Integration Token"}
                       {selected.id === 'figma' && "Figma Personal Access Token"}
                       {selected.id === 'monday' && "Monday.com API v2 Token"}
                     </label>
@@ -214,7 +216,7 @@ export default function IntegrationsPage() {
                         data-1p-ignore
                         value={apiKey}
                         onChange={(e) => setApiKey(e.target.value)}
-                        placeholder={selected.id === 'slack' ? "xoxb-..." : selected.id === 'github' ? "ghp_..." : "Enter token..."}
+                        placeholder={selected.id === 'slack' ? "xoxb-..." : selected.id === 'github' ? "ghp_..." : selected.id === 'notion' ? "secret_..." : "Enter token..."}
                         className="w-full bg-white/5 border border-white/10 rounded-xl py-3 px-4 text-white placeholder:text-white/20 focus:outline-none focus:ring-2 focus:ring-purple-500/50"
                       />
                     )}
