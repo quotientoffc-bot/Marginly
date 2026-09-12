@@ -10,7 +10,7 @@ import RadialGlowButton from "@/components/ui/radial-glow-button";
 import { motion, AnimatePresence } from "framer-motion";
 
 const INTEGRATIONS = [
-  { id: 'custom-ai', icon: BrainCircuit, color: "text-purple-400", name: "Custom AI Model", desc: "OPENAI / ANTHROPIC / LOCAL. Bring your own API key." },
+  { id: 'custom-ai', icon: BrainCircuit, color: "text-purple-400", name: "Custom AI Model", desc: "OPENAI / ANTHROPIC / GEMINI. Bring your own API key." },
   { id: 'gmail', icon: Mail, color: "text-red-400", name: "Gmail", desc: "Sync emails and automatically parse scope from client threads." },
   { id: 'slack', icon: MessageSquare, color: "text-green-400", name: "Slack", desc: "Receive real-time alerts for scope creep directly in channels." },
   { id: 'zoom', icon: Video, color: "text-blue-500", name: "Zoom", desc: "Auto-record and transcribe client meetings for scope analysis." },
@@ -137,7 +137,7 @@ export default function IntegrationsPage() {
             <>
               <BrainCircuit className="w-5 h-5 text-purple-400 mb-2 group-hover:scale-110 transition-transform" />
               <p className="text-xs font-bold text-white">Custom AI Model</p>
-              <p className="text-[9px] text-white/50">OPENAI / ANTHROPIC / LOCAL</p>
+              <p className="text-[9px] text-white/50">OPENAI / ANTHROPIC / GEMINI</p>
               <p className="text-[9px] text-white/40 mt-1 truncate">Bring your own API key to power the Marginly...</p>
             </>
           ))}
@@ -188,7 +188,7 @@ export default function IntegrationsPage() {
                 {!connected.includes(selected.id) && (
                   <div className="w-full text-left mb-6">
                     <label className="text-xs font-semibold text-white/50 uppercase tracking-widest ml-1 mb-2 block">
-                      {selected.id === 'custom-ai' && "API Key (OpenAI / Anthropic)"}
+                      {selected.id === 'custom-ai' && "API Key (OpenAI / Anthropic / Gemini)"}
                       {['gmail', 'calendar', 'drive', 'docs'].includes(selected.id) && "Google Cloud Service Account JSON"}
                       {selected.id === 'slack' && "Slack Bot Token (xoxb-...)"}
                       {selected.id === 'zoom' && "Zoom Server-to-Server OAuth Token"}
@@ -210,6 +210,8 @@ export default function IntegrationsPage() {
                     ) : (
                       <input 
                         type="password"
+                        autoComplete="new-password"
+                        data-1p-ignore
                         value={apiKey}
                         onChange={(e) => setApiKey(e.target.value)}
                         placeholder={selected.id === 'slack' ? "xoxb-..." : selected.id === 'github' ? "ghp_..." : "Enter token..."}
